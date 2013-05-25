@@ -86,8 +86,6 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 			var_playerpos.y = input.getY() ;
 			
 			Ray r = H2G2Game.camera.getPickRay(var_playerpos.x, var_playerpos.y);
-			
-			System.out.println(r.origin);
 
 			var_playerpos.x =r.origin.x ;
 			var_playerpos.y =r.origin.y ;

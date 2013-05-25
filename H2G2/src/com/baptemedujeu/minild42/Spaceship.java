@@ -71,5 +71,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity
 		pos.x = (float)(orbitCentre.x + Math.cos(orbitAngle)*orbitRadius);
 		pos.y = (float)(orbitCentre.y + Math.sin(orbitAngle)*orbitRadius);
 		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - sprite.getHeight()/2);
+		
+		sprite.setRotation((float)(180*orbitAngle / Math.PI) + Math.signum(orbitSpeed)*90.0f);
 	}
 }
