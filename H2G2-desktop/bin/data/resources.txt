@@ -1,2 +1,3 @@
 texture hitchhiker hitchhiker.png
 texture enemy enemy.png
+texture thumb thumb.png
