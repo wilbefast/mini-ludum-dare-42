@@ -20,7 +20,7 @@ public class H2G2Game implements ApplicationListener
 		Engine.Init();
 		Engine.ResourceManager().LoadResourcesFile("resources.txt");
 
-		camera = new OrthographicCamera(3, 3* h / w);
+		camera = new OrthographicCamera(30.0f, 30.0f * h / w);
 		
 		// Create player character
 		var_hitchhiker = new Hitchhiker();
@@ -30,13 +30,13 @@ public class H2G2Game implements ApplicationListener
 		
 		// Create ships
 		Spaceship s;
-		s = new Spaceship(0.5f, 0, 0.5f);
+		s = new Spaceship(5.0f, 0, 5.0f);
 		Engine.DisplayMaster().Add(s);
 		Engine.UpdateMaster().Add(s);
-		s = new Spaceship(-0.8f, 0.4f, 0.3f);
+		s = new Spaceship(-8.0f, 4.0f, 3.0f);
 		Engine.DisplayMaster().Add(s);
 		Engine.UpdateMaster().Add(s);
-		s = new Spaceship(0.2f, -0.3f, 0.7f);
+		s = new Spaceship(2.0f, -3.0f, 7.0f);
 		Engine.DisplayMaster().Add(s);
 		Engine.UpdateMaster().Add(s);
 	}

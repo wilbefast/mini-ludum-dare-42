@@ -12,7 +12,7 @@ import com.jackamikaz.gameengine.utils.DisplayOrder;
 
 public class Spaceship implements DisplayedEntity, UpdatedEntity
 {
-	private static final float SPEED = 0.1f;
+	private static final float SPEED = 1.0f;
 	
 	
 	
@@ -39,7 +39,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity
 		Texture t = Engine.ResourceManager().GetTexture("spaceship");
 		TextureRegion tr = new TextureRegion(t, 0, 0, 64, 64);
 		sprite = new Sprite(tr);
-		sprite.setSize(0.1f, 0.1f * sprite.getHeight() / sprite.getWidth());
+		sprite.setSize(1, sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setPosition(pos.x, pos.y);
 	}
