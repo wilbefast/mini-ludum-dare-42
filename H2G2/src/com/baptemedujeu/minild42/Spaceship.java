@@ -27,6 +27,10 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity
 
 	public Spaceship(float x, float y, float _orbitRadius)
 	{
+		// register
+		Engine.DisplayMaster().Add(this);
+		Engine.UpdateMaster().Add(this);
+		
 		// orbit
 		orbitCentre = new Vector2(x, y);
 		orbitRadius = _orbitRadius;
@@ -66,6 +70,6 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity
 		
 		pos.x = (float)(orbitCentre.x + Math.cos(orbitAngle)*orbitRadius);
 		pos.y = (float)(orbitCentre.y + Math.sin(orbitAngle)*orbitRadius);
-		sprite.setPosition(pos.x, pos.y);
+		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - sprite.getHeight()/2);
 	}
 }

@@ -23,7 +23,13 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 	private Vector2 var_playerpos;
 	private Vector2 var_thumbTarget;
 	
-	public Hitchhiker() {
+	public Hitchhiker() 
+	{
+		// register
+		Engine.DisplayMaster().Add(this);
+		Engine.UpdateMaster().Add(this);
+		Engine.InputMaster().Add(this);
+		
 		// TODO Auto-generated method stub
 		var_tex = Engine.ResourceManager().GetTexture("hitchhiker");
 		TextureRegion region = new TextureRegion(var_tex, 0, 0, 64, 64);
@@ -51,7 +57,8 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 		
 		SpriteBatch batch = Engine.Batch();
 		batch.begin();
-		sprite.setPosition(var_playerpos.x  -sprite.getWidth() / 2 ,var_playerpos.y  -sprite.getHeight() / 2 ) ;
+		sprite.setPosition(var_playerpos.x  -sprite.getWidth() / 2 ,
+												var_playerpos.y  -sprite.getHeight() / 2 ) ;
 		//System.out.println("sprite.getHeight()" + sprite.getHeight());
 		
 		//draw
@@ -79,6 +86,8 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 			var_playerpos.y = input.getY() ;
 			
 			Ray r = H2G2Game.camera.getPickRay(var_playerpos.x, var_playerpos.y);
+			
+			System.out.println(r.origin);
 
 			var_playerpos.x =r.origin.x ;
 			var_playerpos.y =r.origin.y ;

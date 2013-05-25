@@ -23,22 +23,17 @@ public class H2G2Game implements ApplicationListener
 		camera = new OrthographicCamera(30.0f, 30.0f * h / w);
 		
 		// Create player character
-		var_hitchhiker = new Hitchhiker();
-		Engine.DisplayMaster().Add(var_hitchhiker);
-		Engine.UpdateMaster().Add(var_hitchhiker);
-		Engine.InputMaster().Add(var_hitchhiker);
-		
+		new Hitchhiker();
+
 		// Create ships
-		Spaceship s;
-		s = new Spaceship(5.0f, 0, 5.0f);
-		Engine.DisplayMaster().Add(s);
-		Engine.UpdateMaster().Add(s);
-		s = new Spaceship(-8.0f, 4.0f, 3.0f);
-		Engine.DisplayMaster().Add(s);
-		Engine.UpdateMaster().Add(s);
-		s = new Spaceship(2.0f, -3.0f, 7.0f);
-		Engine.DisplayMaster().Add(s);
-		Engine.UpdateMaster().Add(s);
+		new Spaceship(5.0f, 0, 5.0f);
+		new Spaceship(-8.0f, 4.0f, 3.0f);
+		new Spaceship(2.0f, -3.0f, 7.0f);
+		
+		// Create planets
+		new Planet(6.0f, 2.0f);
+		new Planet(-1.0f, 4.0f);
+		new Planet(-5.0f, -5.0f);
 	}
 
 	@Override
