@@ -1,3 +1,9 @@
 
-**bin/
+**bin**
+
 **.class
+
+**.BASE*
+**.REMOTE*
+**.BACKUP*
+**.orig*
