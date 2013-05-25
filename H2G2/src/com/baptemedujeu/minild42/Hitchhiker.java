@@ -15,7 +15,7 @@ import com.jackamikaz.gameengine.InputEntity;
 import com.jackamikaz.gameengine.UpdatedEntity;
 import com.jackamikaz.gameengine.utils.DisplayOrder;
 
-public class Hitchhiker implements DisplayedEntity,UpdatedEntity,InputEntity {
+public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 
 	private Sprite sprite;
 	private Texture var_tex;

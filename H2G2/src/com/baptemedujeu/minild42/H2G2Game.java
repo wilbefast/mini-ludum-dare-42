@@ -5,21 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.jackamikaz.gameengine.Engine;
 
 public class H2G2Game implements ApplicationListener 
 {
 	public static OrthographicCamera camera;
-	private Texture texture;
-	private Sprite sprite;
 	private Hitchhiker var_hitchhiker ;
-	private Vector2 var_playerpos;
-
 	@Override
 	public void create()
 	{
@@ -31,28 +24,21 @@ public class H2G2Game implements ApplicationListener
 
 		camera = new OrthographicCamera(1, h / w);
 		
-		texture = new Texture(Gdx.files.internal("data/libgdx.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		TextureRegion region = new TextureRegion(texture, 0, 0, 512, 275);
-		
-		sprite = new Sprite(region);
-		sprite.setSize(0.9f, 0.9f * sprite.getHeight() / sprite.getWidth());
-		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-		sprite.setPosition(-sprite.getWidth() / 2, -sprite.getHeight() / 2);
-	
+		// Create player character
 		var_hitchhiker = new Hitchhiker();
-
 		Engine.DisplayMaster().Add(var_hitchhiker);
 		Engine.UpdateMaster().Add(var_hitchhiker);
 		Engine.InputMaster().Add(var_hitchhiker);
+		
+		// Create ships
+		Spaceship s = new Spaceship(0, 0);
+		Engine.DisplayMaster().Add(s);
+		Engine.UpdateMaster().Add(s);
 	}
 
 	@Override
 	public void dispose()
 	{
-		texture.dispose();
-		
 		Engine.Quit();
 	}
 
