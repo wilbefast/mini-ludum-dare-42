@@ -12,11 +12,16 @@ import com.jackamikaz.gameengine.utils.DisplayOrder;
 
 public class Spaceship implements DisplayedEntity, UpdatedEntity
 {
+	private static final float SPEED = 0.1f;
+	
+	
+	
 	private Sprite sprite;
 	
 	private Vector2 orbitCentre;
 	private float orbitRadius;
 	private float orbitAngle;
+	private float orbitSpeed;
 	
 	private Vector2 pos;
 
@@ -25,6 +30,8 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity
 		// orbit
 		orbitCentre = new Vector2(x, y);
 		orbitRadius = _orbitRadius;
+		orbitSpeed = (float)(SPEED * ((Math.random() < 0.5) ? -1 : 1) 
+															/ orbitRadius*2*Math.PI);
 		pos = new Vector2(x + orbitRadius, y);
 		orbitAngle = 0.0f;
 		
@@ -55,7 +62,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity
 	@Override
 	public void Update(float deltaT)
 	{
-		orbitAngle += deltaT;
+		orbitAngle += deltaT*orbitSpeed;
 		
 		pos.x = (float)(orbitCentre.x + Math.cos(orbitAngle)*orbitRadius);
 		pos.y = (float)(orbitCentre.y + Math.sin(orbitAngle)*orbitRadius);
