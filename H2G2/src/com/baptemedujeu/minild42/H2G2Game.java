@@ -20,7 +20,7 @@ public class H2G2Game implements ApplicationListener
 		Engine.Init();
 		Engine.ResourceManager().LoadResourcesFile("resources.txt");
 
-		camera = new OrthographicCamera(30.0f, 30.0f * h / w);
+		camera = new OrthographicCamera(25.0f, 25.0f * h / w);
 		
 		// Create player character
 		new Hitchhiker();
