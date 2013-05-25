@@ -1,0 +1,10 @@
+*/bin/
+*/libs/
+.classpath
+.project
+.settings
+H2G2-android/res
+H2G2-android/gen
+H2G2-android/proguard.cfg
+H2G2-android/project.properties
+H2G2-html/war/
