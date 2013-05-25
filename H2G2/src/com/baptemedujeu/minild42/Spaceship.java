@@ -12,14 +12,23 @@ import com.jackamikaz.gameengine.utils.DisplayOrder;
 
 public class Spaceship implements DisplayedEntity, UpdatedEntity
 {
-
 	private Sprite sprite;
+	
+	private Vector2 orbitCentre;
+	private float orbitRadius;
+	private float orbitAngle;
+	
 	private Vector2 pos;
 
-	public Spaceship(float x, float y)
+	public Spaceship(float x, float y, float _orbitRadius)
 	{
-		pos = new Vector2(x, y);
+		// orbit
+		orbitCentre = new Vector2(x, y);
+		orbitRadius = _orbitRadius;
+		pos = new Vector2(x + orbitRadius, y);
+		orbitAngle = 0.0f;
 		
+		// sprite
 		Texture t = Engine.ResourceManager().GetTexture("spaceship");
 		TextureRegion tr = new TextureRegion(t, 0, 0, 64, 64);
 		sprite = new Sprite(tr);
@@ -31,9 +40,6 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity
 	@Override
 	public void Display(float lerp)
 	{
-
-		sprite.setPosition(pos.x, pos.y);
-		
 		SpriteBatch batch = Engine.Batch();
 		batch.begin();
 			sprite.draw(batch);
@@ -49,6 +55,10 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity
 	@Override
 	public void Update(float deltaT)
 	{
+		orbitAngle += deltaT;
+		
+		pos.x = (float)(orbitCentre.x + Math.cos(orbitAngle)*orbitRadius);
+		pos.y = (float)(orbitCentre.y + Math.sin(orbitAngle)*orbitRadius);
 		sprite.setPosition(pos.x, pos.y);
 	}
 }

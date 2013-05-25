@@ -4,8 +4,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jackamikaz.gameengine.Engine;
 
@@ -31,7 +29,7 @@ public class H2G2Game implements ApplicationListener
 		Engine.InputMaster().Add(var_hitchhiker);
 		
 		// Create ships
-		Spaceship s = new Spaceship(0, 0);
+		Spaceship s = new Spaceship(0, 0, 0.1f);
 		Engine.DisplayMaster().Add(s);
 		Engine.UpdateMaster().Add(s);
 	}
