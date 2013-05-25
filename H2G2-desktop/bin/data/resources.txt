@@ -1,0 +1,2 @@
+texture hitchhiker hitchhiker.png
+texture enemy enemy.png
