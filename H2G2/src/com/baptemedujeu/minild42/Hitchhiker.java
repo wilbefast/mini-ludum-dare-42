@@ -15,7 +15,7 @@ import com.jackamikaz.gameengine.InputEntity;
 import com.jackamikaz.gameengine.UpdatedEntity;
 import com.jackamikaz.gameengine.utils.DisplayOrder;
 
-public class Hitchhiker implements DisplayedEntity,UpdatedEntity,InputEntity {
+public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 
 	private Sprite sprite;
 	private Sprite spritethumb;
@@ -29,11 +29,18 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity,InputEntity {
 	private float var_ThumbDelta = 0;
 	private boolean var_isThumbing = false;
 	
-	public Hitchhiker() {
+	public Hitchhiker() 
+	{
+		// register
+		Engine.DisplayMaster().Add(this);
+		Engine.UpdateMaster().Add(this);
+		Engine.InputMaster().Add(this);
+		
 		// TODO Auto-generated method stub
 		var_tex = Engine.ResourceManager().GetTexture("hitchhiker");
 		TextureRegion region = new TextureRegion(var_tex, 0, 0, 64, 64);
 		sprite = new Sprite(region);
+
 		var_thumb = Engine.ResourceManager().GetTexture("thumb");
 		TextureRegion regionthumb = new TextureRegion(var_thumb, 0, 0, 64, 64);
 		spritethumb = new Sprite(regionthumb);
@@ -41,8 +48,8 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity,InputEntity {
 		var_playerpos = new Vector2(0,0) ;
 		var_thumbTarget = new Vector2(0,0) ;
 		var_thumbPos = new Vector2(0,0) ;
-
-		sprite.setSize(0.1f, 0.1f * sprite.getHeight() / sprite.getWidth());
+		
+		sprite.setSize(1, sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
 		var_playerpos.x = -sprite.getWidth() / 2;
@@ -66,6 +73,7 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity,InputEntity {
 		sprite.setPosition(var_playerpos.x  -sprite.getWidth() / 2 ,var_playerpos.y  -sprite.getHeight() / 2 ) ;
 		spritethumb.setPosition(var_thumbPos.x  -spritethumb.getWidth() / 2 ,var_thumbPos.y  -spritethumb.getHeight() / 2 ) ;
 		//System.out.println("sprite.getHeight()" + sprite.getHeight());
+		
 		//draw
 		sprite.draw(batch);	
 		spritethumb.draw(batch);		

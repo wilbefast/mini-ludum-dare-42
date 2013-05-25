@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="64" height="64" tilewidth="32" tileheight="32" backgroundcolor="#c5c5c5">
+ <objectgroup color="#ff0000" name="ships" width="64" height="64">
+  <object x="736" y="416" width="608" height="576">
+   <ellipse/>
+  </object>
+  <object x="512" y="800" width="384" height="320">
+   <ellipse/>
+  </object>
+  <object x="736" y="896" width="480" height="544">
+   <ellipse/>
+  </object>
+  <object x="640" y="1280" width="480" height="544">
+   <ellipse/>
+  </object>
+  <object x="992" y="128" width="480" height="544">
+   <ellipse/>
+  </object>
+  <object x="1408" y="64" width="480" height="544">
+   <ellipse/>
+  </object>
+  <object x="1056" y="1408" width="480" height="544">
+   <ellipse/>
+  </object>
+  <object x="1248" y="1088" width="480" height="544">
+   <ellipse/>
+  </object>
+  <object x="1440" y="832" width="480" height="544">
+   <ellipse/>
+  </object>
+  <object x="1280" y="480" width="480" height="544">
+   <ellipse/>
+  </object>
+  <object x="288" y="1632" width="256" height="256">
+   <ellipse/>
+  </object>
+  <object x="352" y="1344" width="320" height="352">
+   <ellipse/>
+  </object>
+  <object x="448" y="1504" width="480" height="544">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#0000ff" name="planets" width="64" height="64">
+  <object x="768" y="448" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="1088" y="704" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="1280" y="992" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="1456" y="656" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="1248" y="320" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="1664" y="224" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object x="704" y="928" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object x="352" y="1760" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object x="384" y="1216" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="1216" y="1600" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="1152" y="1376" width="32" height="32">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#00aa00" name="hitchhikers" width="64" height="64">
+  <object x="352" y="1728" width="32" height="32"/>
+ </objectgroup>
+</map>

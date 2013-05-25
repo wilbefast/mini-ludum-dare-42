@@ -4,22 +4,13 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.jackamikaz.gameengine.Engine;
 
 public class H2G2Game implements ApplicationListener 
 {
 	public static OrthographicCamera camera;
-	private Texture texture;
-	private Sprite sprite;
 	private Hitchhiker var_hitchhiker ;
-	private Vector2 var_playerpos;
-
 	@Override
 	public void create()
 	{
@@ -29,30 +20,25 @@ public class H2G2Game implements ApplicationListener
 		Engine.Init();
 		Engine.ResourceManager().LoadResourcesFile("resources.txt");
 
-		camera = new OrthographicCamera(1, h / w);
+		camera = new OrthographicCamera(30.0f, 30.0f * h / w);
 		
-		texture = new Texture(Gdx.files.internal("data/libgdx.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		// Create player character
+		new Hitchhiker();
 
-		TextureRegion region = new TextureRegion(texture, 0, 0, 512, 275);
+		// Create ships
+		new Spaceship(5.0f, 0, 5.0f);
+		new Spaceship(-8.0f, 4.0f, 3.0f);
+		new Spaceship(2.0f, -3.0f, 7.0f);
 		
-		sprite = new Sprite(region);
-		sprite.setSize(0.9f, 0.9f * sprite.getHeight() / sprite.getWidth());
-		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-		sprite.setPosition(-sprite.getWidth() / 2, -sprite.getHeight() / 2);
-	
-		var_hitchhiker = new Hitchhiker();
-
-		Engine.DisplayMaster().Add(var_hitchhiker);
-		Engine.UpdateMaster().Add(var_hitchhiker);
-		Engine.InputMaster().Add(var_hitchhiker);
+		// Create planets
+		new Planet(6.0f, 2.0f);
+		new Planet(-1.0f, 4.0f);
+		new Planet(-5.0f, -5.0f);
 	}
 
 	@Override
 	public void dispose()
 	{
-		texture.dispose();
-		
 		Engine.Quit();
 	}
 
