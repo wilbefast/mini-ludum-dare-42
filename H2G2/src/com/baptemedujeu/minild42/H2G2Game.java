@@ -20,6 +20,8 @@ public class H2G2Game implements ApplicationListener
 		
 		Engine.Init();
 		Engine.ResourceManager().LoadResourcesFile("resources.txt");
+		
+		new Background();
 
 		// camera
 		camera = new OrthographicCamera(13.0f, 13.0f * h / w);
