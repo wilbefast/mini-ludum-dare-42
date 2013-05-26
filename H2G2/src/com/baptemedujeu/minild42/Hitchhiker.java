@@ -66,8 +66,10 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	@Override
 	public void Display(float lerp)
 	{
-		sprite.setPosition(pos.x  -sprite.getWidth() / 2 , pos.y  -sprite.getHeight() / 2 ) ;
-		sprite.draw(Engine.Batch());				//draw the player
+		if ((!(falltowards instanceof Spaceship)) || pos.dst(falltowards.getPosition())>0.5) {
+			sprite.setPosition(pos.x  -sprite.getWidth() / 2 , pos.y  -sprite.getHeight() / 2 ) ;
+			sprite.draw(Engine.Batch());				//draw the player
+		}
 	}
 
 	@Override
@@ -105,7 +107,13 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		float distanceToPlanet = toPlanet.len();
 		if(distanceToPlanet > falltowards.getRadius() + this.getRadius())
 		{
-			desiredCameraAngle = toPlanet.angle() + 90;
+			if ((falltowards instanceof Spaceship)) {
+				Spaceship sp = (Spaceship) falltowards;
+				int sign = (int) Math.signum(sp.orbitSpeed);
+				desiredCameraAngle = (float) (sp.getRotation()*(180/Math.PI)) + 90*sign - 90;
+			} else {
+				desiredCameraAngle = toPlanet.angle() + 90;
+			}
 			pos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
 		}
 		
@@ -139,9 +147,9 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		
 		
 		// home camera
-		Vector2 p = (falltowards instanceof Spaceship) 
+		Vector2 p = ((falltowards instanceof Spaceship) 
 				? falltowards.getPosition()
-				: this.pos;
+				: this.pos);
 		H2G2Game.camera.position.set(
 				H2G2Game.camera.position.x*0.95f + p.x*0.05f, 
 				H2G2Game.camera.position.y*0.95f + p.y*0.05f, 0);
@@ -159,8 +167,11 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		{
 			Vector3 in = new Vector3(input.getX(), input.getY(), 0.0f);
 			H2G2Game.camera.unproject(in);
-			
-			Thumb thmb = new Thumb(pos.x, pos.y, in.x - pos.x, in.y - pos.y, 15.0f, this, falltowards);
+			if ((falltowards instanceof Spaceship)) {
+				Thumb thmb = new Thumb(falltowards.getPosition().x, falltowards.getPosition().y, in.x - falltowards.getPosition().x, in.y - falltowards.getPosition().y, 15.0f, this, falltowards);
+			} else {
+				Thumb thmb = new Thumb(pos.x, pos.y, in.x - pos.x, in.y - pos.y, 15.0f, this, falltowards);
+			}
 		}
 	}
 

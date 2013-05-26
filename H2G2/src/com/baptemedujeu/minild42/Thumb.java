@@ -43,7 +43,12 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 		direction = new Vector2(tx,ty);
 		direction.nor();
 		direction.scl(power);
-		var_falltowards = fallto;
+		//var_falltowards = fallto;
+		if ((ignore instanceof Spaceship)) {
+			var_falltowards = ignore;
+		} else {
+			var_falltowards = fallto;
+		}
 		var_ignore = ignore;
 		var_origin = (Hitchhiker) fallto;
 		//Temporary
@@ -52,7 +57,7 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 		Texture t = Engine.ResourceManager().GetTexture("thumb");
 		TextureRegion tr = new TextureRegion(t, 0, 0, 128, 128);
 		sprite = new Sprite(tr);
-		sprite.setSize(1.0f, 1.0f * sprite.getHeight() / sprite.getWidth());
+		sprite.setSize(.5f, .5f * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getHeight() / 2);
 		sprite.rotate(direction.angle());
