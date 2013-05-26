@@ -67,7 +67,7 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 					@Override
 					public float evaluate(UpdatedEntity e) {
 						// TODO Auto-generated method stub
-						if ((e instanceof Spaceship || e instanceof Planet) && e != var_ignore){
+						if ((e instanceof Mothership || e instanceof Spaceship || e instanceof Planet) && e != var_ignore){
 							SpatialEntity se = (SpatialEntity)e;
 							return se.getPosition().dst(pos);
 						}

@@ -66,7 +66,9 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	@Override
 	public void Display(float lerp)
 	{
-		if ((!(falltowards instanceof Spaceship)) || pos.dst(falltowards.getPosition())>0.5) {
+		if (  ((falltowards instanceof Mothership) || (falltowards instanceof Spaceship)) && pos.dst(falltowards.getPosition())<0.5    ) {
+			
+		} else {
 			sprite.setPosition(pos.x  -sprite.getWidth() / 2 , pos.y  -sprite.getHeight() / 2 ) ;
 			sprite.draw(Engine.Batch());				//draw the player
 		}
@@ -107,14 +109,17 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		float distanceToPlanet = toPlanet.len();
 		if(distanceToPlanet > falltowards.getRadius() + this.getRadius())
 		{
-			if ((falltowards instanceof Spaceship)) {
-				Spaceship sp = (Spaceship) falltowards;
-				int sign = (int) Math.signum(sp.orbitSpeed);
-				desiredCameraAngle = (float) (sp.getRotation()*(180/Math.PI)) + 90*sign - 90;
-			} else {
-				desiredCameraAngle = toPlanet.angle() + 90;
-			}
 			pos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
+		}
+		
+		if ((falltowards instanceof Spaceship)) {
+			Spaceship sp = (Spaceship) falltowards;
+			int sign = (int) Math.signum(sp.orbitSpeed);
+			desiredCameraAngle = (float) (sp.getRotation()*(180/Math.PI)) + 90*sign - 90;
+		} else if ((falltowards instanceof Mothership)) {
+			desiredCameraAngle += deltaT*15;
+		} else {
+			desiredCameraAngle = toPlanet.angle() + 90;
 		}
 		
 		// reset camera angle
