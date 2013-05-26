@@ -95,7 +95,7 @@ public class ResourceManager {
 				if (!AddResource(new ResSpriteLayout()		, tokens, 1))
 				if (!AddResource(new ResSound()				, tokens, 1))
 				if (!AddResource(new ResSoundCollection()	, tokens, 0))
-				if (!AddResource(new ResMusic()				, tokens, 1))
+				//if (!AddResource(new ResMusic()				, tokens, 1))
 					 AddResource(new ResFloat()				, tokens, 0);
 				
 				line = reader.readLine();

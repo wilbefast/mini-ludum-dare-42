@@ -52,9 +52,9 @@ public class H2G2Game implements ApplicationListener
 		level = new Level("test.tmx");
 		
 		// music
-		Music music = Engine.ResourceManager().GetMusic("music");
-		music.setLooping(true);
-		music.play();
+		//Music music = Engine.ResourceManager().GetMusic("music");
+		//music.setLooping(true);
+		//music.play();
 	}
 
 	@Override
