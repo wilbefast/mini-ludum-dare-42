@@ -114,12 +114,27 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		}
 		
 		// reset camera angle
+		currentCameraAngle = (currentCameraAngle + 360) % 360;
+		desiredCameraAngle = (desiredCameraAngle + 360) % 360;
 		if(currentCameraAngle != desiredCameraAngle)
 		{
-			float rotateAmount = 
-					((Math.abs(desiredCameraAngle - currentCameraAngle) > 0.1f)
-					? minabs((desiredCameraAngle - currentCameraAngle)*10 / distanceToPlanet, CAMERA_ROTATE_SPEED)
-					: desiredCameraAngle - currentCameraAngle) * deltaT;
+			float delta_angle = desiredCameraAngle - currentCameraAngle;
+			
+			if(delta_angle > 180)
+				delta_angle -= 360;
+			else if(delta_angle < -180)
+				delta_angle += 360;
+			
+			float abs_angle = Math.abs(delta_angle);
+			float rotateAmount;
+			
+			if(abs_angle > 0.1f)
+			{
+				rotateAmount = 
+						minabs((delta_angle)*10 / distanceToPlanet, CAMERA_ROTATE_SPEED) * deltaT;
+			}
+			else
+				rotateAmount = delta_angle * deltaT;
 			
 			currentCameraAngle += rotateAmount;
 			H2G2Game.camera.rotate(rotateAmount);
