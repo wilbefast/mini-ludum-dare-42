@@ -50,13 +50,13 @@ public abstract class StackOfCollections<obj> implements IStackOfCollections<obj
 	
 	public void Pop() {entities.pop();}
 	
-	public Collection<obj> AdjustAndPeek() {
+	protected Collection<obj> AdjustAndPeek() {
 		Collec<obj> collec = entities.peek();
 		collec.AdjustCollection();
 		return collec.collection;
 	}
 	
-	protected Collection<obj> Peek() {
+	public Collection<obj> Peek() {
 		return entities.peek().collection;
 	}
 }

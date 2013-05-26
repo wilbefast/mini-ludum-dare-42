@@ -116,7 +116,7 @@ public abstract class EntityQueryManager
 	public static Collection<UpdatedEntity> getAll()
 	{
 		queryResult.clear();
-		queryResult.addAll(Engine.UpdateMaster().AdjustAndPeek());
+		queryResult.addAll(Engine.UpdateMaster().Peek());
 		
 		return queryResult;
 	}
@@ -136,7 +136,7 @@ public abstract class EntityQueryManager
 	
 	public static Collection<UpdatedEntity> getMatching(Query qry)
 	{
-		Collection<UpdatedEntity> all = Engine.UpdateMaster().AdjustAndPeek();
+		Collection<UpdatedEntity> all = Engine.UpdateMaster().Peek();
 		queryResult.clear();
 		
 		for(UpdatedEntity e : all)
@@ -153,7 +153,7 @@ public abstract class EntityQueryManager
 	
 	private static UpdatedEntity getMinMax(Query qry, boolean max)
 	{
-		Collection<UpdatedEntity> all = Engine.UpdateMaster().AdjustAndPeek();
+		Collection<UpdatedEntity> all = Engine.UpdateMaster().Peek();
 		
 		float minmax_val = (max ? -Float.MAX_VALUE : Float.MAX_VALUE) ;
 		UpdatedEntity minmax_entity = null;

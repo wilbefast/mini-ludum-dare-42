@@ -74,6 +74,6 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	public float getHeight() { return sprite.getHeight(); }
 
 	@Override
-	public float getRotation() { return 0.0f; }
+	public float getRotation() { return sprite.getRotation(); }
 	
 }
