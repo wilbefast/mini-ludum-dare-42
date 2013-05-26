@@ -64,6 +64,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 				new EntityQueryManager.TypedDistanceQuery(var_playerpos, Planet.class);
 		
 		var_falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
+		System.out.println(var_falltowards);
 
 	}
 
@@ -100,15 +101,18 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public void Update(float deltaT)
 	{
 	
+		if (var_falltowards==null) {
+			var_falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
+		}
 		var_thumb_time_since=Math.max(0, var_thumb_time_since-deltaT);
 		
 		// GRAVITY
-		Planet nearestPlanet = (Planet)(EntityQueryManager.getMin(planetDistance));
+		//Planet nearestPlanet = (Planet)(EntityQueryManager.getMin(planetDistance));
 		
 		Vector2 toPlanet = 
-				(new Vector2()).set(nearestPlanet.getPosition()).sub(var_playerpos);
+				(new Vector2()).set(var_falltowards.getPosition()).sub(var_playerpos);
 		float distanceToPlanet = toPlanet.len();
-		if(distanceToPlanet > nearestPlanet.getRadius() + this.getRadius())
+		if(distanceToPlanet > var_falltowards.getRadius() + this.getRadius())
 		{
 			desiredCameraAngle = toPlanet.angle() + 90;
 			var_playerpos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
