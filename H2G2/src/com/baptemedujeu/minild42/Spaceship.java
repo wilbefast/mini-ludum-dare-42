@@ -7,10 +7,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.jackamikaz.gameengine.DisplayedEntity;
 import com.jackamikaz.gameengine.Engine;
+import com.jackamikaz.gameengine.SpatialEntity;
 import com.jackamikaz.gameengine.UpdatedEntity;
 import com.jackamikaz.gameengine.utils.DisplayOrder;
 
-public class Spaceship implements DisplayedEntity, UpdatedEntity
+public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 {
 	private static final float SPEED = 1.0f;
 	
@@ -74,4 +75,22 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity
 		
 		sprite.setRotation((float)(180*orbitAngle / Math.PI) + Math.signum(orbitSpeed)*90.0f);
 	}
+	
+	
+	//! SPATIAL ENTITY
+	
+	@Override
+	public Vector2 getPosition() { return pos; }
+
+	@Override
+	public float getRadius() { return 15.0f; }
+
+	@Override
+	public float getWidth() { return 30.0f; }
+
+	@Override
+	public float getHeight() { return 30.0f; }
+
+	@Override
+	public float getRotation() { return 0.0f; }
 }

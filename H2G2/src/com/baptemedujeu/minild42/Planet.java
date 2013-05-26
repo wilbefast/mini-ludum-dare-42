@@ -7,10 +7,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.jackamikaz.gameengine.DisplayedEntity;
 import com.jackamikaz.gameengine.Engine;
+import com.jackamikaz.gameengine.SpatialEntity;
 import com.jackamikaz.gameengine.UpdatedEntity;
 import com.jackamikaz.gameengine.utils.DisplayOrder;
 
-public class Planet implements DisplayedEntity, UpdatedEntity
+public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 {
 	private Vector2 pos;
 	private Sprite sprite;
@@ -53,4 +54,22 @@ public class Planet implements DisplayedEntity, UpdatedEntity
 		return DisplayOrder.Render2D.ordinal();
 	}
 
+	
+	//! SPATIAL ENTITY
+	
+	@Override
+	public Vector2 getPosition() { return pos; }
+
+	@Override
+	public float getRadius() { return 30.0f; }
+
+	@Override
+	public float getWidth() { return 60.0f; }
+
+	@Override
+	public float getHeight() { return 60.0f; }
+
+	@Override
+	public float getRotation() { return 0.0f; }
+	
 }
