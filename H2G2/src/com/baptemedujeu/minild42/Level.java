@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.XmlReader;
 public class Level
 {
 	private int level_width = 64, level_height = 64;
+	public Hitchhiker hiker;
 	
 	private void parseMotherships(XmlReader.Element og)
 	{
@@ -49,7 +50,7 @@ public class Level
 			float x = o.getFloatAttribute("x")/level_width, 
 						y = o.getFloatAttribute("y")/level_height, 
 						r = o.getFloatAttribute("width")/2/level_width;
-			new Hitchhiker(x + r, y + r);
+			hiker = new Hitchhiker(x + r, y + r);
 		}
 	}
 	

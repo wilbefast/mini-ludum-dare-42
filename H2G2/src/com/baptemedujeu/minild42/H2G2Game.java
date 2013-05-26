@@ -30,6 +30,7 @@ public class H2G2Game implements ApplicationListener
 		Engine.Init();
 		Engine.ResourceManager().LoadResourcesFile("resources.txt");
 		
+		new Background();
 		// GUI sprites
 		gui = new SpriteBatch();
 		gui.setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, w, h));
