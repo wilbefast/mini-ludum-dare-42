@@ -49,10 +49,7 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	@Override
 	public void Display(float lerp)
 	{
-		SpriteBatch batch = Engine.Batch();
-		batch.begin();
-			sprite.draw(batch);
-		batch.end();
+		sprite.draw( Engine.Batch());
 	}
 
 	@Override

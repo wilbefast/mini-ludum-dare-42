@@ -66,12 +66,8 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	@Override
 	public void Display(float lerp)
 	{
-
-		SpriteBatch batch = Engine.Batch();
-		batch.begin();
 		sprite.setPosition(pos.x  -sprite.getWidth() / 2 , pos.y  -sprite.getHeight() / 2 ) ;
-		sprite.draw(batch);				//draw the player
-		batch.end();
+		sprite.draw(Engine.Batch());				//draw the player
 	}
 
 	@Override
