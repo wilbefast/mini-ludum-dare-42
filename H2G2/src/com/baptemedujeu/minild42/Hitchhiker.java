@@ -28,9 +28,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	private float desiredCameraAngle = 0.0f;
 	private float currentCameraAngle = 0.0f;
 	private static final float CAMERA_ROTATE_SPEED = 260.0f;
-	private float var_thumb_time_since;
-	private float var_thumb_cooldown = 0.3f;
-	
 	private SpatialEntity var_falltowards;
 
 	
@@ -56,8 +53,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		var_playerpos.x = -sprite.getWidth() / 2;
 		var_playerpos.y = -sprite.getHeight() / 2;
 		sprite.setPosition(var_playerpos.x, var_playerpos.y);
-		var_thumb_cooldown = 0.3f;
-		var_thumb_time_since = 0;
 		
 		// initialise queries
 		planetDistance = 
@@ -68,6 +63,11 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 
 	}
 
+	public void setFalltowards(SpatialEntity sp)
+	{
+		var_falltowards = sp;
+	}
+	
 	@Override
 	public void Display(float lerp)
 	{
@@ -104,7 +104,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		if (var_falltowards==null) {
 			var_falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
 		}
-		var_thumb_time_since=Math.max(0, var_thumb_time_since-deltaT);
 		
 		// GRAVITY
 		//Planet nearestPlanet = (Planet)(EntityQueryManager.getMin(planetDistance));
@@ -114,7 +113,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		float distanceToPlanet = toPlanet.len();
 		if(distanceToPlanet > var_falltowards.getRadius() + this.getRadius())
 		{
-			desiredCameraAngle = toPlanet.angle() + 90;
+			desiredCameraAngle = -toPlanet.angle() -90;
 			var_playerpos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
 		}
 		
@@ -128,7 +127,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			
 			currentCameraAngle += rotateAmount;
 			H2G2Game.camera.rotate(rotateAmount);
-			sprite.rotate(rotateAmount);
+			sprite.rotate(-rotateAmount);
 			
 			H2G2Game.camera.update();
 		}
@@ -138,15 +137,14 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public void NewInput(Input input)
 	{
 
-		if(input.isTouched() && var_thumb_time_since<=0)
+		if(input.isTouched() && Thumb.canThrow())
 		{
-			var_thumb_time_since = var_thumb_cooldown;
 			float inX = input.getX() ;
 			float inY = input.getY() ;
 			
 			Ray r = H2G2Game.camera.getPickRay(inX, inY);
-			Thumb thmb = new Thumb(var_playerpos.x, var_playerpos.y);
-			thmb.setDirection(r.origin.x, r.origin.y);
+			new Thumb(var_playerpos.x, var_playerpos.y,r.origin.x, r.origin.y, 30, this);
+			//thmb.setDirection(r.origin.x, r.origin.y);
 			//var_thumb.setPosition(var_playerpos.x, var_playerpos.y);
 			//var_thumb.setDirection(r.origin.x, r.origin.y);
 		}
