@@ -26,7 +26,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	
 	// camera
 	private float desiredCameraAngle = 0.0f;
-	public float currentCameraAngle = 0.0f;
+	private float currentCameraAngle = 0.0f;
 	private static final float CAMERA_ROTATE_SPEED = 180.0f;
 	
 	private SpatialEntity falltowards;
