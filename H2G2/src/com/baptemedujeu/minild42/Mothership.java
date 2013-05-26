@@ -61,7 +61,7 @@ public class Mothership implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	public Vector2 getPosition() { return pos; }
 
 	@Override
-	public float getRadius() { return sprite.getWidth()*0.5f; }
+	public float getRadius() { return sprite.getWidth()*0.01f; }
 
 	@Override
 	public float getWidth() { return sprite.getWidth(); }

@@ -9,6 +9,7 @@ texture spaceship_occupied spaceship1_used.png
 texture trail trail.png
 texture planet planet.png
 texture planet2 planet2.png
+texture planet3 planet3.png
 texture enemy enemy.png
 texture thumb thumb.png
 music music h2g2.ogg

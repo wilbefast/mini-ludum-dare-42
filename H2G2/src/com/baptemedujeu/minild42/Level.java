@@ -8,8 +8,11 @@ import com.badlogic.gdx.utils.XmlReader;
 
 public class Level
 {
-	private int level_width = 64, level_height = 64;
 	public Hitchhiker hiker;
+	public Mothership mother;
+	
+	
+	private int level_width = 64, level_height = 64;
 	
 	private void parseMotherships(XmlReader.Element og)
 	{
@@ -17,7 +20,7 @@ public class Level
 		{
 			float x = o.getFloatAttribute("x")/level_width, 
 						y = o.getFloatAttribute("y")/level_height;
-			new Mothership(x, y);
+			mother = new Mothership(x, y);
 		}
 	}
 	

@@ -121,6 +121,19 @@ public abstract class EntityQueryManager
 		return queryResult;
 	}
 	
+	public static Collection<UpdatedEntity> getAllType(Class<?> type)
+	{
+		Collection<UpdatedEntity> all = Engine.UpdateMaster().Peek();
+		queryResult.clear();
+		
+		for(UpdatedEntity e : all)
+			if(type.isInstance(e))
+				queryResult.add(e);
+		
+		return queryResult;
+		
+	}
+	
 	public static Collection<UpdatedEntity> getMatching(Query qry)
 	{
 		Collection<UpdatedEntity> all = Engine.UpdateMaster().Peek();
