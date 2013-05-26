@@ -10,6 +10,7 @@ import com.jackamikaz.gameengine.Engine;
 public class H2G2Game implements ApplicationListener 
 {
 	public static OrthographicCamera camera;
+	public static Level level;
 	
 	@Override
 	public void create()
@@ -21,20 +22,22 @@ public class H2G2Game implements ApplicationListener
 		Engine.ResourceManager().LoadResourcesFile("resources.txt");
 
 		// Create player character
-		Hitchhiker player = new Hitchhiker();
+		//Hitchhiker player = new Hitchhiker();
 		
 		// camera
-		camera = new OrthographicCamera(25.0f, 25.0f * h / w);
-
+		camera = new OrthographicCamera(15.0f, 15.0f * h / w);
+		
+		level = new Level("test.tmx");
+		
 		// Create ships
-		new Spaceship(5.0f, 0, 5.0f);
+		/*new Spaceship(5.0f, 0, 5.0f);
 		new Spaceship(-8.0f, 4.0f, 3.0f);
 		new Spaceship(2.0f, -3.0f, 7.0f);
 		
 		// Create planets
 		new Planet(6.0f, 2.0f);
 		new Planet(-1.0f, 4.0f);
-		new Planet(-5.0f, -5.0f);
+		new Planet(-5.0f, -5.0f);*/
 	}
 
 	@Override

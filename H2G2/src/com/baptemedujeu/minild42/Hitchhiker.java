@@ -1,9 +1,7 @@
 package com.baptemedujeu.minild42;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -33,29 +31,24 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	
 	private EntityQueryManager.TypedDistanceQuery planetDistance;
 	
-	public Hitchhiker() 
+	public Hitchhiker(float x, float y) 
 	{
 		// register
 		Engine.DisplayMaster().Add(this);
 		Engine.UpdateMaster().Add(this);
 		Engine.InputMaster().Add(this);
 
-		// TODO Auto-generated method stub
+		var_playerpos = new Vector2(x, y);
+
 		var_tex = Engine.ResourceManager().GetTexture("hitchhiker");
 		TextureRegion region = new TextureRegion(var_tex, 0, 0, 64, 64);
 		sprite = new Sprite(region);
-
-		var_playerpos = new Vector2(0, 0);
-
+		sprite.setPosition(var_playerpos.x, var_playerpos.y);
 		sprite.setSize(1, sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-
-		var_playerpos.x = -sprite.getWidth() / 2;
-		var_playerpos.y = -sprite.getHeight() / 2;
-
-		var_thumb = new Thumb(0, 0);
-		sprite.setPosition(var_playerpos.x, var_playerpos.y);
-
+		
+		var_thumb = new Thumb(x, y);
+		
 		// initialise queries
 		planetDistance = 
 				new EntityQueryManager.TypedDistanceQuery(var_playerpos, Planet.class);
@@ -120,6 +113,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			
 			H2G2Game.camera.update();
 		}
+			
 	}
 
 	@Override
@@ -133,7 +127,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			
 			Ray r = H2G2Game.camera.getPickRay(inX, inY);
 			//System.out.println("PlayerPosWorld "+r.origin);
-			System.out.println("flal");
 			var_thumb.setPosition(var_playerpos.x, var_playerpos.y);
 			var_thumb.setDirection(r.origin.x, r.origin.y);
 		}

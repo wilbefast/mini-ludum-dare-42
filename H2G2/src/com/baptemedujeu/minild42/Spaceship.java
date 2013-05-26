@@ -44,7 +44,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		Texture t = Engine.ResourceManager().GetTexture("spaceship");
 		TextureRegion tr = new TextureRegion(t, 0, 0, 64, 64);
 		sprite = new Sprite(tr);
-		sprite.setSize(1, sprite.getHeight() / sprite.getWidth());
+		sprite.setSize(0.5f, 0.5f * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setPosition(pos.x, pos.y);
 	}
