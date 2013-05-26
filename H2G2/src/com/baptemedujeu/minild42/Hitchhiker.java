@@ -137,7 +137,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 				rotateAmount = delta_angle * deltaT;
 			
 			currentCameraAngle += rotateAmount;
-			H2G2Game.camera.rotate(rotateAmount);
+			H2G2Game.camera.rotate(-rotateAmount);
 			sprite.rotate(rotateAmount);
 		}
 		
@@ -164,7 +164,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			Vector3 in = new Vector3(input.getX(), input.getY(), 0.0f);
 			H2G2Game.camera.unproject(in);
 			
-			Thumb thmb = new Thumb(pos.x, pos.y, in.x - pos.x, in.y - pos.y, 30.0f, this);
+			Thumb thmb = new Thumb(pos.x, pos.y, in.x - pos.x, in.y - pos.y, 15.0f, this, falltowards);
 		}
 	}
 

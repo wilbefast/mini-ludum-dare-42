@@ -17,6 +17,7 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 	private Vector2 pos;
 	private Vector2 direction;
 	private SpatialEntity var_falltowards;
+	private SpatialEntity var_ignore;
 	private Hitchhiker var_origin;
 	private Sprite sprite;
 	
@@ -30,7 +31,7 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 	
 	float time;
 	
-	public Thumb(float x, float y, float tx, float ty, float power, SpatialEntity fallto)
+	public Thumb(float x, float y, float tx, float ty, float power, SpatialEntity fallto, SpatialEntity ignore)
 	{
 		// register
 		thumbCount++;
@@ -43,6 +44,7 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 		direction.nor();
 		direction.scl(power);
 		var_falltowards = fallto;
+		var_ignore = ignore;
 		var_origin = (Hitchhiker) fallto;
 		//Temporary
 		time = 0;
@@ -60,7 +62,7 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 					@Override
 					public float evaluate(UpdatedEntity e) {
 						// TODO Auto-generated method stub
-						if (e instanceof Spaceship || e instanceof Planet){
+						if ((e instanceof Spaceship || e instanceof Planet) && e != var_ignore){
 							SpatialEntity se = (SpatialEntity)e;
 							return se.getPosition().dst(pos);
 						}
@@ -76,14 +78,14 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 	public void Update(float deltaT)
 	{
 		time = Math.min(time+deltaT, 1);
-		if (time > 0.1 && pos.dst(var_falltowards.getPosition())<2) {
+		if (time > 0.1 && pos.dst(var_falltowards.getPosition())<0.5) {
 			thumbCount--;
 			Engine.DisplayMaster().Remove(this);
 			Engine.UpdateMaster().Remove(this);
 		}
 		
 		SpatialEntity closest = (SpatialEntity) (EntityQueryManager.getMin(thingDistance));
-		if (time > 0.1 && pos.dst(closest.getPosition())<2) {
+		if (time > 0.1 && pos.dst(closest.getPosition())<0.5) {
 			var_origin.setFalltowards(closest);
 			thumbCount--;
 			Engine.DisplayMaster().Remove(this);
