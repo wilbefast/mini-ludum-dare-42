@@ -20,12 +20,7 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 	private Sprite sprite;
 	private Texture var_tex;
 	private Vector2 var_playerpos;
-	
-	private Vector2 var_thumbTarget;
-	private Vector2 var_thumbPos;
-	private float var_ThumbSpeed = 1.0f ;
-	private float var_ThumbDelta = 0;
-	private boolean var_isThumbing = false;
+	private Thumb var_thumb;
 	
 	public Hitchhiker() 
 	{
@@ -40,8 +35,6 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 		sprite = new Sprite(region);
 
 		var_playerpos = new Vector2(0,0) ;
-		var_thumbTarget = new Vector2(0,0) ;
-		var_thumbPos = new Vector2(0,0) ;
 		
 		sprite.setSize(1, sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
@@ -50,13 +43,8 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 		var_playerpos.y = -sprite.getHeight() / 2 ;
 
 		var_thumb = new Thumb(0,0);
-		
-		
-		var_thumbTarget.x = var_thumb.getWidth() / 2;
-		var_thumbTarget.y = var_thumb.getHeight() / 2 ;
 
 		sprite.setPosition(var_playerpos.x , var_playerpos.y);
-		var_thumb.setPosition(var_thumbTarget.x , var_thumbTarget.y);
 		
 	}
 
@@ -66,7 +54,7 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 		SpriteBatch batch = Engine.Batch();
 		batch.begin();
 		sprite.setPosition(var_playerpos.x  -sprite.getWidth() / 2 ,var_playerpos.y  -sprite.getHeight() / 2 ) ;
-		var_thumb.setPosition(var_thumbPos.x  ,var_thumbPos.y  ) ;
+		//var_thumb.setPosition(var_thumbPos.x  ,var_thumbPos.y  ) ;
 			//System.out.println("sprite.getHeight()" + sprite.getHeight());
 		
 		//draw
@@ -82,36 +70,22 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 	@Override
 	public void Update(float deltaT) {
 		
-		if(var_isThumbing)
-		{
-			var_ThumbDelta += deltaT*var_ThumbSpeed;
-		//	System.out.println("Stopped thumb" + var_ThumbDelta);
-			Vector2	tempVector = new Vector2(var_playerpos);
-			var_thumbPos = tempVector.lerp(var_thumbTarget, var_ThumbDelta);
-			if(var_ThumbDelta>=1)
-			{
-				System.out.println("Stopped thumb");
-				var_isThumbing = false;
-				var_ThumbDelta = 0;
-			}
-		}
 	}
 
 	@Override
 	public void NewInput(Input input) {
 		// TODO Auto-generated method stub
 		
-		if(input.isTouched() && !var_isThumbing)
+		if(input.isTouched())
 		{
-			var_thumbTarget.x = input.getX() ;
-			var_thumbTarget.y = input.getY() ;
+			float inX = input.getX() ;
+			float inY = input.getY() ;
 			
-			Ray r = H2G2Game.camera.getPickRay(var_thumbTarget.x, var_thumbTarget.y);
+			Ray r = H2G2Game.camera.getPickRay(inX, inY);
 			//System.out.println("PlayerPosWorld "+r.origin);
-
-			var_thumbTarget.x =r.origin.x ;
-			var_thumbTarget.y =r.origin.y ;
-			var_isThumbing = true;
+			System.out.println("flal");
+			var_thumb.setPosition(var_playerpos.x, var_playerpos.y);
+			var_thumb.setDirection(r.origin.x, r.origin.y);
 		}
 	}
 	

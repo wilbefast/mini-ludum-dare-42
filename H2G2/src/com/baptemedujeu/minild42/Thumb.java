@@ -13,6 +13,7 @@ import com.jackamikaz.gameengine.utils.DisplayOrder;
 public class Thumb implements DisplayedEntity, UpdatedEntity {
 
 	private Vector2 pos;
+	private Vector2 direction;
 	private Sprite sprite;
 	
 	public Thumb(float x, float y)
@@ -23,6 +24,7 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 		
 		// position
 		pos = new Vector2(x, y);
+		direction = new Vector2(0,0);
 		
 		// sprite
 		Texture t = Engine.ResourceManager().GetTexture("thumb");
@@ -30,19 +32,28 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 		sprite = new Sprite(tr);
 		sprite.setSize(5.0f, 5.0f * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getWidth() / 2);
+		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getHeight() / 2);
 	}
 	
 	@Override
 	public void Update(float deltaT)
 	{
+		System.out.println("BEFORE: "+pos);
+		Vector2 theDir = new Vector2(direction);
+		pos = pos.add(
+				theDir.scl(
+						deltaT*10));
+		System.out.println("AFTER: "+pos+"\n");
 	}
+	
 
 	@Override
 	public void Display(float lerp)
 	{
 		SpriteBatch batch = Engine.Batch();
 		batch.begin();
+			System.out.println("Draw me like one of your french girls");
+			sprite.setPosition(pos. x- sprite.getWidth() / 2,pos.y - sprite.getHeight() / 2);
 			sprite.draw(batch);
 		batch.end();
 	}
@@ -68,5 +79,12 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 		pos.x = x;
 		pos.y = y ;
 		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getWidth() / 2);
+	}
+	
+	public void setDirection(float x, float y)
+	{
+		direction.x = x;
+		direction.y = y;
+		direction = direction.nor();
 	}
 }
