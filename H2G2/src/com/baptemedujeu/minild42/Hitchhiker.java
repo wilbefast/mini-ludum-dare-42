@@ -109,7 +109,13 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		float distanceToPlanet = toPlanet.len();
 		if(distanceToPlanet > falltowards.getRadius() + this.getRadius())
 		{
-			desiredCameraAngle = toPlanet.angle() + 90;
+			if ((falltowards instanceof Spaceship)) {
+				Spaceship sp = (Spaceship) falltowards;
+				int sign = (int) Math.signum(sp.orbitSpeed);
+				desiredCameraAngle = (float) (sp.getRotation()*(180/Math.PI)) + 90*sign - 90;
+			} else {
+				desiredCameraAngle = toPlanet.angle() + 90;
+			}
 			pos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
 		}
 		
@@ -143,9 +149,9 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		
 		
 		// home camera
-		Vector2 p = (falltowards instanceof Spaceship) 
+		Vector2 p = ((falltowards instanceof Spaceship) 
 				? falltowards.getPosition()
-				: this.pos;
+				: this.pos);
 		H2G2Game.camera.position.set(
 				H2G2Game.camera.position.x*0.95f + p.x*0.05f, 
 				H2G2Game.camera.position.y*0.95f + p.y*0.05f, 0);

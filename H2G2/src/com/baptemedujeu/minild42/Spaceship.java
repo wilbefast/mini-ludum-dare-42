@@ -22,7 +22,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	private Vector2 orbitCentre;
 	private float orbitRadius;
 	private float orbitAngle;
-	private float orbitSpeed;
+	public float orbitSpeed;
 	
 	private Vector2 pos;
 
@@ -93,5 +93,5 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	public float getHeight() { return 1.0f; }
 
 	@Override
-	public float getRotation() { return 0.0f; }
+	public float getRotation() { return orbitAngle; }
 }
