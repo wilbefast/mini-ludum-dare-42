@@ -1,5 +1,6 @@
 texture hitchhiker hitchhiker.png
 texture spaceship mothership.png
 texture planet planet.png
+texture planet2 planet2.png
 texture enemy enemy.png
 texture thumb thumb.png

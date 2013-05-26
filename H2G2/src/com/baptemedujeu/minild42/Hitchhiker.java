@@ -1,5 +1,6 @@
 package com.baptemedujeu.minild42;
 
+
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -27,8 +28,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	private float desiredCameraAngle = 0.0f;
 	private float currentCameraAngle = 0.0f;
 	private static final float CAMERA_ROTATE_SPEED = 260.0f;
-	private float thumb_time_since;
-	private float thumb_cooldown = 0.3f;
 	
 	private SpatialEntity falltowards;
 
@@ -62,13 +61,18 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 
 	}
 
+	public void setFalltowards(SpatialEntity sp)
+	{
+		falltowards = sp;
+	}
+	
 	@Override
 	public void Display(float lerp)
 	{
 
 		SpriteBatch batch = Engine.Batch();
 		batch.begin();
-		sprite.setPosition(pos.x  -sprite.getWidth() / 2 ,pos.y  -sprite.getHeight() / 2 ) ;
+		sprite.setPosition(var_playerpos.x  -sprite.getWidth() / 2 ,var_playerpos.y  -sprite.getHeight() / 2 ) ;
 		sprite.draw(batch);				//draw the player
 		batch.end();
 	}
@@ -98,7 +102,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		if (falltowards == null) 
 		{
 			falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
-			System.out.println("FALLING TOWARDS: " + falltowards);
 		}
 		thumb_time_since=Math.max(0, thumb_time_since-deltaT);
 		
@@ -135,17 +138,13 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public void NewInput(Input input)
 	{
 
-		if(input.isTouched() && thumb_time_since<=0)
+		if(input.isTouched() && Thumb.canThrow())
 		{
-			thumb_time_since = thumb_cooldown;
-
 			Vector3 in = new Vector3(input.getX(), input.getY(), 0.0f);
 			H2G2Game.camera.unproject(in);
 			
 			Thumb thmb = new Thumb(pos.x, pos.y);
 			thmb.setDirection(in.x - pos.x, in.y - pos.y);
-			
-			
 		}
 	}
 
