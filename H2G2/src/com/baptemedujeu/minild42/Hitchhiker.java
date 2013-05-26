@@ -120,22 +120,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			
 			H2G2Game.camera.update();
 		}
-		
-		
-		// THUMB
-		if (var_isThumbing)
-		{
-			var_ThumbDelta += deltaT * var_ThumbSpeed;
-			// System.out.println("Stopped thumb" + var_ThumbDelta);
-			Vector2 tempVector = new Vector2(var_playerpos);
-			var_thumbPos = tempVector.lerp(var_thumbTarget, var_ThumbDelta);
-			if (var_ThumbDelta >= 1)
-			{
-				System.out.println("Stopped thumb");
-				var_isThumbing = false;
-				var_ThumbDelta = 0;
-			}
-		}
 	}
 
 	@Override
