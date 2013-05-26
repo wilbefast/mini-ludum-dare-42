@@ -12,7 +12,7 @@ public class Level
 	public Mothership mother;
 	
 	
-	private int level_width = 64, level_height = 64;
+	private int level_width = 32, level_height = 32;
 	
 	private void parseMotherships(XmlReader.Element og)
 	{

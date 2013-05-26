@@ -90,7 +90,7 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 		}
 		
 		SpatialEntity closest = (SpatialEntity) (EntityQueryManager.getMin(thingDistance));
-		if (time > 0.1 && pos.dst(closest.getPosition())<0.5) {
+		if (time > 0.1 && pos.dst(closest.getPosition())<Math.max(0.5, closest.getRadius())) {
 			var_origin.setFalltowards(closest);
 			thumbCount--;
 			Engine.DisplayMaster().Remove(this);
