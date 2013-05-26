@@ -23,6 +23,12 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	private Sprite sprite;
 	private Texture var_tex;
 	private Vector2 var_playerpos;
+	
+	// camera
+	private float desiredCameraAngle = 0.0f;
+	private float currentCameraAngle = 0.0f;
+	private static final float CAMERA_ROTATE_SPEED = 260.0f;
+	
 	private Thumb var_thumb;
 	
 	private EntityQueryManager.TypedDistanceQuery planetDistance;
@@ -39,8 +45,8 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		TextureRegion region = new TextureRegion(var_tex, 0, 0, 64, 64);
 		sprite = new Sprite(region);
 
-		var_playerpos = new Vector2(0,0) ;
-		
+		var_playerpos = new Vector2(0, 0);
+
 		sprite.setSize(1, sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
@@ -48,11 +54,12 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		var_playerpos.y = -sprite.getHeight() / 2;
 
 		var_thumb = new Thumb(0, 0);
-		var_thumb = new Thumb(0,0);
-		sprite.setPosition(var_playerpos.x , var_playerpos.y);
+		sprite.setPosition(var_playerpos.x, var_playerpos.y);
+
 		// initialise queries
 		planetDistance = 
 				new EntityQueryManager.TypedDistanceQuery(var_playerpos, Planet.class);
+
 	}
 
 	@Override
@@ -72,6 +79,18 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		return DisplayOrder.Render2D.ordinal();
 	}
 
+	private static float minabs(float v, float positivevalue)
+	{
+		return (float)((v > 0) ? Math.min(v, positivevalue) : 
+															Math.max(v, -positivevalue));
+	}
+	
+	private static float maxabs(float v, float positivevalue)
+	{
+		return (float)((v > 0) ? Math.max(v, positivevalue) : 
+															Math.min(v, -positivevalue));
+	}
+	
 	@Override
 	public void Update(float deltaT)
 	{
@@ -81,15 +100,32 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		Vector2 toPlanet = 
 				(new Vector2()).set(nearestPlanet.getPosition()).sub(var_playerpos);
 		float distanceToPlanet = toPlanet.len();
-		if(distanceToPlanet > 2f)
+		if(distanceToPlanet > nearestPlanet.getRadius() + this.getRadius())
+		{
+			desiredCameraAngle = toPlanet.angle() + 90;
 			var_playerpos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
+		}
+		
+		// reset camera angle
+		if(currentCameraAngle != desiredCameraAngle)
+		{
+			float rotateAmount = 
+					((Math.abs(desiredCameraAngle - currentCameraAngle) > 0.1f)
+					? minabs((desiredCameraAngle - currentCameraAngle)*10 / distanceToPlanet, CAMERA_ROTATE_SPEED)
+					: desiredCameraAngle - currentCameraAngle) * deltaT;
+			
+			currentCameraAngle += rotateAmount;
+			H2G2Game.camera.rotate(rotateAmount);
+			sprite.rotate(rotateAmount);
+			
+			H2G2Game.camera.update();
+		}
 	}
 
 	@Override
 	public void NewInput(Input input)
 	{
-		// TODO Auto-generated method stub
-		
+
 		if(input.isTouched())
 		{
 			float inX = input.getX() ;
@@ -110,13 +146,13 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public Vector2 getPosition() { return var_playerpos; }
 
 	@Override
-	public float getRadius() { return 1.0f; }
+	public float getRadius() { return 0.5f; }
 
 	@Override
-	public float getWidth() { return 2.0f; }
+	public float getWidth() { return 1.0f; }
 
 	@Override
-	public float getHeight() { return 2.0f; }
+	public float getHeight() { return 1.0f; }
 
 	@Override
 	public float getRotation() { return 0.0f; }
