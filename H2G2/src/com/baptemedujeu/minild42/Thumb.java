@@ -15,6 +15,7 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 	private Vector2 pos;
 	private Vector2 direction;
 	private Sprite sprite;
+	private float time;
 	
 	public Thumb(float x, float y)
 	{
@@ -25,6 +26,9 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 		// position
 		pos = new Vector2(x, y);
 		direction = new Vector2(0,0);
+		
+		//Temporary
+		time = 1;
 		
 		// sprite
 		Texture t = Engine.ResourceManager().GetTexture("thumb");
@@ -38,6 +42,11 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 	@Override
 	public void Update(float deltaT)
 	{
+		time-=deltaT;
+		if (time<=0) {
+			Engine.DisplayMaster().Remove(this);
+			Engine.UpdateMaster().Remove(this);
+		}
 		Vector2 theDir = new Vector2(direction);
 		pos = pos.add(
 				theDir.scl(

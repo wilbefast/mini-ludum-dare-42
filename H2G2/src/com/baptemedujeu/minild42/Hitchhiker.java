@@ -28,8 +28,11 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	private float desiredCameraAngle = 0.0f;
 	private float currentCameraAngle = 0.0f;
 	private static final float CAMERA_ROTATE_SPEED = 260.0f;
+	private float var_thumb_time_since;
+	private float var_thumb_cooldown = 0.3f;
 	
-	private Thumb var_thumb;
+	private SpatialEntity var_falltowards;
+
 	
 	private EntityQueryManager.TypedDistanceQuery planetDistance;
 	
@@ -52,13 +55,15 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 
 		var_playerpos.x = -sprite.getWidth() / 2;
 		var_playerpos.y = -sprite.getHeight() / 2;
-
-		var_thumb = new Thumb(0, 0);
 		sprite.setPosition(var_playerpos.x, var_playerpos.y);
-
+		var_thumb_cooldown = 0.3f;
+		var_thumb_time_since = 0;
+		
 		// initialise queries
 		planetDistance = 
 				new EntityQueryManager.TypedDistanceQuery(var_playerpos, Planet.class);
+		
+		var_falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
 
 	}
 
@@ -94,6 +99,9 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	@Override
 	public void Update(float deltaT)
 	{
+	
+		var_thumb_time_since=Math.max(0, var_thumb_time_since-deltaT);
+		
 		// GRAVITY
 		Planet nearestPlanet = (Planet)(EntityQueryManager.getMin(planetDistance));
 		
@@ -126,16 +134,17 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public void NewInput(Input input)
 	{
 
-		if(input.isTouched())
+		if(input.isTouched() && var_thumb_time_since<=0)
 		{
+			var_thumb_time_since = var_thumb_cooldown;
 			float inX = input.getX() ;
 			float inY = input.getY() ;
 			
 			Ray r = H2G2Game.camera.getPickRay(inX, inY);
-			//System.out.println("PlayerPosWorld "+r.origin);
-			System.out.println("flal");
-			var_thumb.setPosition(var_playerpos.x, var_playerpos.y);
-			var_thumb.setDirection(r.origin.x, r.origin.y);
+			Thumb thmb = new Thumb(var_playerpos.x, var_playerpos.y);
+			thmb.setDirection(r.origin.x, r.origin.y);
+			//var_thumb.setPosition(var_playerpos.x, var_playerpos.y);
+			//var_thumb.setDirection(r.origin.x, r.origin.y);
 		}
 	}
 
