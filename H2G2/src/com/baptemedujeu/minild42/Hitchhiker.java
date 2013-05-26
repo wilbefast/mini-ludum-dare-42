@@ -2,9 +2,8 @@ package com.baptemedujeu.minild42;
 
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -12,17 +11,27 @@ import com.badlogic.gdx.math.Vector3;
 import com.jackamikaz.gameengine.DisplayedEntity;
 import com.jackamikaz.gameengine.Engine;
 import com.jackamikaz.gameengine.InputEntity;
-import com.jackamikaz.gameengine.SpatialEntity;
 import com.jackamikaz.gameengine.UpdatedEntity;
+import com.jackamikaz.gameengine.utils.ButtonWatcher;
 import com.jackamikaz.gameengine.utils.DisplayOrder;
+import com.jackamikaz.gameengine.utils.InputWatcher;
 
 public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		SpatialEntity
 {
 
 	private Sprite sprite;
-	private Texture texture;
 	private Vector2 pos;
+	
+	// thumb related
+	private InputWatcher clic;
+	private TextureRegion[] arrowSheet;
+	private Sprite arrow;
+	private float thumbLoad;
+	private Vector2 mousePos;
+	private static final float thumbLoadSpeed = 1.0f;
+	private static final float thumbMinPower = 4.5f;
+	private static final float thumbMaxPower = 22.0f;
 	
 	// camera
 	private float desiredCameraAngle = 0.0f;
@@ -43,20 +52,28 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		Engine.InputMaster().Add(this);
 
 		pos = new Vector2(x, y);
+		mousePos = new Vector2(pos);
+		
+		clic = new ButtonWatcher(Buttons.LEFT);
+		
 		H2G2Game.camera.position.set(x, y, 0);
 		H2G2Game.camera.update();
 
-		texture = Engine.ResourceManager().GetTexture("hitchhiker");
-		TextureRegion region = new TextureRegion(texture, 0, 0, 64, 64);
-		sprite = new Sprite(region);
+		// hitchhiker sprite
+		sprite = new Sprite(Engine.ResourceManager().GetTexture("hitchhiker"));
 		sprite.setPosition(pos.x, pos.y);
-		sprite.setSize(0.7f, 0.7f * sprite.getHeight() / sprite.getWidth());
+		sprite.setSize(0.7f, 0.7f);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		
-		// initialise queries
+		// arrow sprites
+		arrowSheet = Engine.ResourceManager().GetTextureSheet("arrow");
+		arrow = new Sprite(arrowSheet[0]);
+		arrow.setSize(0.5f, 0.5f * arrow.getHeight() / arrow.getWidth());
+		arrow.setOrigin(arrow.getWidth() / 2, 0);
+		
+		// initialize queries
 		planetDistance = 
 				new EntityQueryManager.TypedDistanceQuery(pos, Planet.class);
-
 	}
 
 	public void setFalltowards(SpatialEntity sp)
@@ -70,9 +87,12 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		if (  ((falltowards instanceof Mothership) || (falltowards instanceof Spaceship)) && pos.dst(falltowards.getPosition())<0.5    ) {
 			
 		} else {
-			sprite.setPosition(pos.x  -sprite.getWidth() / 2 , pos.y  -sprite.getHeight() / 2 ) ;
+			sprite.setPosition(pos.x  -sprite.getOriginX() , pos.y  -sprite.getOriginY() ) ;
 			sprite.draw(Engine.Batch());				//draw the player
 		}
+		
+		if (thumbLoad > 0)
+			arrow.draw(Engine.Batch());
 	}
 
 	@Override
@@ -96,14 +116,38 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	@Override
 	public void Update(float deltaT)
 	{
-	
-		if (falltowards == null) 
-		{
-			falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
+		// thumb
+		if (Thumb.canThrow()) {
+			if(clic.isPressed()) {
+				thumbLoad += deltaT * thumbLoadSpeed;
+				if (thumbLoad > 1.0f)
+					thumbLoad = 1.0f;
+			}
+			
+			if(clic.wasReleased())
+			{
+				float power = thumbMinPower + (thumbMaxPower - thumbMinPower) * thumbLoad;
+				thumbLoad = 0.0f;
+				if ((falltowards instanceof Spaceship)) {
+					new Thumb(falltowards.getPosition().x, falltowards.getPosition().y, mousePos.x - falltowards.getPosition().x, mousePos.y - falltowards.getPosition().y, power, this, falltowards);
+				} else {
+					new Thumb(pos.x, pos.y, mousePos.x - pos.x, mousePos.y - pos.y, power, this, falltowards);
+				}
+			}
+		}
+		
+		// thumb graphics
+		if (thumbLoad > 0) {
+			Vector2 pToM = new Vector2(mousePos.x - pos.x, mousePos.y - pos.y);
+			pToM.nor().scl(0.5f);
+			arrow.setRegion(arrowSheet[(int)(thumbLoad * (float)arrowSheet.length-1)]);
+			arrow.setPosition(pos.x + pToM.x -arrow.getOriginX() , pos.y + pToM.y -arrow.getOriginY() ) ;
+			arrow.setRotation(pToM.angle() - 90);
 		}
 		
 		// GRAVITY
-		//Planet nearestPlanet = (Planet)(EntityQueryManager.getMin(planetDistance));
+		if (falltowards == null) 
+			falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
 		
 		Vector2 toPlanet = 
 				(new Vector2()).set(falltowards.getPosition()).sub(pos);
@@ -167,7 +211,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			sprite.rotate(rotateAmount);
 		}
 		
-		
 		// home camera
 		Vector2 p = ((falltowards instanceof Spaceship) 
 				? falltowards.getPosition()
@@ -184,19 +227,14 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	@Override
 	public void NewInput(Input input)
 	{
-
-		if(input.isTouched() && Thumb.canThrow())
-		{
-			Vector3 in = new Vector3(input.getX(), input.getY(), 0.0f);
-			H2G2Game.camera.unproject(in);
-			if ((falltowards instanceof Spaceship)) {
-				new Thumb(falltowards.getPosition().x, falltowards.getPosition().y, in.x - falltowards.getPosition().x, in.y - falltowards.getPosition().y, 15.0f, this, falltowards);
-			} else {
-				new Thumb(pos.x, pos.y, in.x - pos.x, in.y - pos.y, 15.0f, this, falltowards);
-			}
-		}
+		clic.NewInput(input);
+		
+		Vector3 in = new Vector3(input.getX(), input.getY(), 0.0f);
+		H2G2Game.camera.unproject(in);
+		
+		mousePos.x = in.x;
+		mousePos.y = in.y;
 	}
-
 	
 	//! SPATIAL ENTITY
 	

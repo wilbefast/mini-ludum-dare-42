@@ -13,6 +13,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.model.Model;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.jackamikaz.gameengine.assets.Curve;
@@ -38,6 +39,7 @@ public class ResourceManager {
 	}
 	
 	public Texture GetTexture(String name) {return (Texture)(GetImpl(name));}
+	public TextureRegion[] GetTextureSheet(String name) {return (TextureRegion[])(GetImpl(name));}
 	public BitmapFont GetFont(String name) {return (BitmapFont)(GetImpl(name));}
 	public ShaderProgram GetShader(String name) {return (ShaderProgram)(GetImpl(name));}
 	public Model GetModel(String name) {return (Model)(GetImpl(name));}
@@ -88,6 +90,7 @@ public class ResourceManager {
 				String[] tokens = line.split("[ ]+");
 				
 				if (!AddResource(new ResTexture()			, tokens, 1))
+				if (!AddResource(new ResTextureSheet()		, tokens, 0))
 				if (!AddResource(new ResFont()				, tokens, 2))
 				if (!AddResource(new ResShader()			, tokens, 2))
 				if (!AddResource(new ResModel()				, tokens, 1))

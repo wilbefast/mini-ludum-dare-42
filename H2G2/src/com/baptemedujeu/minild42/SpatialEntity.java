@@ -1,4 +1,4 @@
-package com.jackamikaz.gameengine;
+package com.baptemedujeu.minild42;
 
 import com.badlogic.gdx.math.Vector2;
 

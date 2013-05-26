@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 import com.jackamikaz.gameengine.Engine;
-import com.jackamikaz.gameengine.SpatialEntity;
 import com.jackamikaz.gameengine.UpdatedEntity;
 
 public abstract class EntityQueryManager
