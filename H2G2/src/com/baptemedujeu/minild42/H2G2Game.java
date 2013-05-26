@@ -22,7 +22,7 @@ public class H2G2Game implements ApplicationListener
 		Engine.ResourceManager().LoadResourcesFile("resources.txt");
 
 		// camera
-		camera = new OrthographicCamera(10.0f, 10.0f * h / w);
+		camera = new OrthographicCamera(13.0f, 13.0f * h / w);
 		
 		// level
 		level = new Level("test.tmx");

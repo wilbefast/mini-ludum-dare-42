@@ -27,7 +27,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	// camera
 	private float desiredCameraAngle = 0.0f;
 	private float currentCameraAngle = 0.0f;
-	private static final float CAMERA_ROTATE_SPEED = 260.0f;
+	private static final float CAMERA_ROTATE_SPEED = 180.0f;
 	
 	private SpatialEntity falltowards;
 
@@ -140,7 +140,17 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			H2G2Game.camera.rotate(rotateAmount);
 			sprite.rotate(rotateAmount);
 		}
-		H2G2Game.camera.position.set(pos.x, pos.y, 0);
+		
+		
+		// home camera
+		Vector2 p = (falltowards instanceof Spaceship) 
+				? falltowards.getPosition()
+				: this.pos;
+		H2G2Game.camera.position.set(
+				H2G2Game.camera.position.x*0.95f + p.x*0.05f, 
+				H2G2Game.camera.position.y*0.95f + p.y*0.05f, 0);
+		
+		// update camera
 		H2G2Game.camera.update();
 			
 	}

@@ -13,7 +13,7 @@ import com.jackamikaz.gameengine.utils.DisplayOrder;
 
 public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 {
-	private static final float SPEED = 1.0f;
+	private static final float SPEED = 0.3f;
 	
 	
 	

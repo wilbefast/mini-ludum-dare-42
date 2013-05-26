@@ -8,8 +8,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "H2G2";
 		cfg.useGL20 = false;
-		cfg.width = 480;
-		cfg.height = 320;
+		cfg.width = 1024;
+		cfg.height = 768;
 		
 		new LwjglApplication(new H2G2Game(), cfg);
 	}
