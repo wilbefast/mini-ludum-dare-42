@@ -40,7 +40,6 @@ public class H2G2Game implements ApplicationListener
 		// ... mothership arrow
 		TextureRegion region = new TextureRegion(gui_texture, 0, 0, 128, 256);
 		mothership_arrow = new Sprite(region);
-		mothership_arrow.setPosition(90.0f, 30.0f);
 		mothership_arrow.setSize(100.0f, 100.0f*mothership_arrow.getHeight() / mothership_arrow.getWidth());
 		mothership_arrow.setOrigin(mothership_arrow.getWidth() / 2, mothership_arrow.getHeight() / 2);
 
@@ -73,10 +72,24 @@ public class H2G2Game implements ApplicationListener
 		world.end();
 		
 		// gui
+		
+		// ... compass
 		toMothership.set(level.mother.getPosition()).sub(camera.position.x, camera.position.y);
-		mothership_arrow.setRotation(toMothership.angle() - 90);
+		boolean drawCompass = (toMothership.len2() > 48);
+		if(drawCompass)
+		{
+			// ... ... position
+			toMothership.nor().scl(Gdx.graphics.getWidth()*0.45f, Gdx.graphics.getHeight()*0.45f);
+			mothership_arrow.setPosition(
+					Gdx.graphics.getWidth()/2 - mothership_arrow.getWidth()/2 + toMothership.x,
+					Gdx.graphics.getHeight()/2  - mothership_arrow.getHeight()/2 + toMothership.y);
+			// ... ... angle
+			mothership_arrow.setRotation(toMothership.angle() - 90);
+		}
 		gui.begin();
-			mothership_arrow.draw(gui);
+			// draw the compass showing where the objective is
+			if(drawCompass)
+				mothership_arrow.draw(gui);
 		gui.end();
 		
 	}

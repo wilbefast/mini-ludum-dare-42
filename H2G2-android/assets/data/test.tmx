@@ -102,17 +102,11 @@
   <object x="352" y="1632" width="64" height="64">
    <ellipse/>
   </object>
-  <object x="224" y="1376" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object x="480" y="1792" width="32" height="32">
-   <ellipse/>
-  </object>
  </objectgroup>
  <objectgroup color="#00aa00" name="hitchhikers" width="64" height="64">
   <object x="192" y="1632" width="32" height="32"/>
  </objectgroup>
  <objectgroup color="#ffff00" name="motherships" width="64" height="64">
-  <object x="1824" y="96" width="32" height="32"/>
+  <object x="1856" y="128" width="32" height="32"/>
  </objectgroup>
 </map>
