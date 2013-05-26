@@ -39,9 +39,9 @@ public class H2G2Game implements ApplicationListener
 		gui.setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, w, h));
 		gui_texture = Engine.ResourceManager().GetTexture("mothership_arrow");
 		// ... mothership arrow
-		TextureRegion region = new TextureRegion(gui_texture, 0, 0, 128, 256);
+		TextureRegion region = new TextureRegion(gui_texture, 0, 0, 128, 128);
 		mothership_arrow = new Sprite(region);
-		mothership_arrow.setSize(100.0f, 100.0f*mothership_arrow.getHeight() / mothership_arrow.getWidth());
+		mothership_arrow.setSize(50.0f, 50.0f*mothership_arrow.getHeight() / mothership_arrow.getWidth());
 		mothership_arrow.setOrigin(mothership_arrow.getWidth() / 2, mothership_arrow.getHeight() / 2);
 
 		// camera
