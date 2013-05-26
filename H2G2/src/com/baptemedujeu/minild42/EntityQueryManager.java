@@ -94,6 +94,8 @@ public abstract class EntityQueryManager
 		public TypedDistanceQuery(Vector2 _referencePoint, Class<?> _colliderType)
 		{
 			super(_referencePoint);
+			
+			collisionType = _colliderType;
 		}
 		
 		@Override

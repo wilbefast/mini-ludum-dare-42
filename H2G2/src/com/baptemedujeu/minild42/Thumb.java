@@ -38,12 +38,10 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 	@Override
 	public void Update(float deltaT)
 	{
-		System.out.println("BEFORE: "+pos);
 		Vector2 theDir = new Vector2(direction);
 		pos = pos.add(
 				theDir.scl(
 						deltaT*10));
-		System.out.println("AFTER: "+pos+"\n");
 	}
 	
 
@@ -52,7 +50,6 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 	{
 		SpriteBatch batch = Engine.Batch();
 		batch.begin();
-			System.out.println("Draw me like one of your french girls");
 			sprite.setPosition(pos. x- sprite.getWidth() / 2,pos.y - sprite.getHeight() / 2);
 			sprite.draw(batch);
 		batch.end();

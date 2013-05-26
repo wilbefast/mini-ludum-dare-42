@@ -25,6 +25,8 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	private Vector2 var_playerpos;
 	private Thumb var_thumb;
 	
+	private EntityQueryManager.TypedDistanceQuery planetDistance;
+	
 	public Hitchhiker() 
 	{
 		// register
@@ -47,8 +49,10 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 
 		var_thumb = new Thumb(0, 0);
 		var_thumb = new Thumb(0,0);
-
 		sprite.setPosition(var_playerpos.x , var_playerpos.y);
+		// initialise queries
+		planetDistance = 
+				new EntityQueryManager.TypedDistanceQuery(var_playerpos, Planet.class);
 	}
 
 	@Override
@@ -58,10 +62,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		SpriteBatch batch = Engine.Batch();
 		batch.begin();
 		sprite.setPosition(var_playerpos.x  -sprite.getWidth() / 2 ,var_playerpos.y  -sprite.getHeight() / 2 ) ;
-		//var_thumb.setPosition(var_thumbPos.x  ,var_thumbPos.y  ) ;
-			//System.out.println("sprite.getHeight()" + sprite.getHeight());
-		
-		//draw
 		sprite.draw(batch);				//draw the player
 		batch.end();
 	}
@@ -76,7 +76,13 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public void Update(float deltaT)
 	{
 		// GRAVITY
-		EntityQueryManager.getMin(qry);
+		Planet nearestPlanet = (Planet)(EntityQueryManager.getMin(planetDistance));
+		
+		Vector2 toPlanet = 
+				(new Vector2()).set(nearestPlanet.getPosition()).sub(var_playerpos);
+		float distanceToPlanet = toPlanet.len();
+		if(distanceToPlanet > 2f)
+			var_playerpos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
 	}
 
 	@Override
@@ -104,13 +110,13 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public Vector2 getPosition() { return var_playerpos; }
 
 	@Override
-	public float getRadius() { return 10.0f; }
+	public float getRadius() { return 1.0f; }
 
 	@Override
-	public float getWidth() { return 20.0f; }
+	public float getWidth() { return 2.0f; }
 
 	@Override
-	public float getHeight() { return 20.0f; }
+	public float getHeight() { return 2.0f; }
 
 	@Override
 	public float getRotation() { return 0.0f; }

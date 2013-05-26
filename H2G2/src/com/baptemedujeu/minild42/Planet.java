@@ -61,13 +61,13 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	public Vector2 getPosition() { return pos; }
 
 	@Override
-	public float getRadius() { return 30.0f; }
+	public float getRadius() { return 2.0f; }
 
 	@Override
-	public float getWidth() { return 60.0f; }
+	public float getWidth() { return 4.0f; }
 
 	@Override
-	public float getHeight() { return 60.0f; }
+	public float getHeight() { return 4.0f; }
 
 	@Override
 	public float getRotation() { return 0.0f; }

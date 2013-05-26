@@ -83,13 +83,13 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	public Vector2 getPosition() { return pos; }
 
 	@Override
-	public float getRadius() { return 15.0f; }
+	public float getRadius() { return 1.5f; }
 
 	@Override
-	public float getWidth() { return 30.0f; }
+	public float getWidth() { return 3.0f; }
 
 	@Override
-	public float getHeight() { return 30.0f; }
+	public float getHeight() { return 3.0f; }
 
 	@Override
 	public float getRotation() { return 0.0f; }
