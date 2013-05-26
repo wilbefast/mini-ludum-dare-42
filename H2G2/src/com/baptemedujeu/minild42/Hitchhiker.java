@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
 import com.jackamikaz.gameengine.DisplayedEntity;
 import com.jackamikaz.gameengine.Engine;
 import com.jackamikaz.gameengine.InputEntity;
@@ -88,11 +87,11 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 															Math.max(v, -positivevalue));
 	}
 	
-	private static float maxabs(float v, float positivevalue)
+	/*private static float maxabs(float v, float positivevalue)
 	{
 		return (float)((v > 0) ? Math.max(v, positivevalue) : 
 															Math.min(v, -positivevalue));
-	}
+	}*/
 	
 	@Override
 	public void Update(float deltaT)
@@ -172,9 +171,9 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			Vector3 in = new Vector3(input.getX(), input.getY(), 0.0f);
 			H2G2Game.camera.unproject(in);
 			if ((falltowards instanceof Spaceship)) {
-				Thumb thmb = new Thumb(falltowards.getPosition().x, falltowards.getPosition().y, in.x - falltowards.getPosition().x, in.y - falltowards.getPosition().y, 15.0f, this, falltowards);
+				new Thumb(falltowards.getPosition().x, falltowards.getPosition().y, in.x - falltowards.getPosition().x, in.y - falltowards.getPosition().y, 15.0f, this, falltowards);
 			} else {
-				Thumb thmb = new Thumb(pos.x, pos.y, in.x - pos.x, in.y - pos.y, 15.0f, this, falltowards);
+				new Thumb(pos.x, pos.y, in.x - pos.x, in.y - pos.y, 15.0f, this, falltowards);
 			}
 		}
 	}
