@@ -15,8 +15,14 @@
   <object x="960" y="768" width="96" height="96">
    <ellipse/>
   </object>
+  <object x="512" y="640" width="96" height="96">
+   <ellipse/>
+  </object>
+  <object x="1024" y="544" width="96" height="96">
+   <ellipse/>
+  </object>
  </objectgroup>
  <objectgroup color="#00aa00" name="hitchhikers" width="64" height="64">
-  <object x="672" y="544" width="32" height="32"/>
+  <object x="64" y="32" width="32" height="32"/>
  </objectgroup>
 </map>

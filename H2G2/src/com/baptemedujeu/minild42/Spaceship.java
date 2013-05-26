@@ -45,7 +45,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		TextureRegion tr = new TextureRegion(t, 0, 0, 1024, 1024);
 		sprite = new Sprite(tr);
 		float size = (sprite.getHeight() / sprite.getWidth());
-		sprite.setSize(4, size * 4);
+		sprite.setSize(2, 2*size);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setPosition(pos.x, pos.y);
 	}
@@ -84,13 +84,13 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	public Vector2 getPosition() { return pos; }
 
 	@Override
-	public float getRadius() { return 1.5f; }
+	public float getRadius() { return 1.0f; }
 
 	@Override
-	public float getWidth() { return 3.0f; }
+	public float getWidth() { return 2.0f; }
 
 	@Override
-	public float getHeight() { return 3.0f; }
+	public float getHeight() { return 2.0f; }
 
 	@Override
 	public float getRotation() { return 0.0f; }
