@@ -30,15 +30,10 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	private static final float CAMERA_ROTATE_SPEED = 260.0f;
 	
 	private Thumb var_thumb;
-	private Vector2 var_thumbTarget;
-	private Vector2 var_thumbPos;
-	private float var_ThumbSpeed = 1.0f;
-	private float var_ThumbDelta = 0;
-	private boolean var_isThumbing = false;
 	
 	private EntityQueryManager.TypedDistanceQuery planetDistance;
-
-	public Hitchhiker()
+	
+	public Hitchhiker() 
 	{
 		// register
 		Engine.DisplayMaster().Add(this);
@@ -51,8 +46,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		sprite = new Sprite(region);
 
 		var_playerpos = new Vector2(0, 0);
-		var_thumbTarget = new Vector2(0, 0);
-		var_thumbPos = new Vector2(0, 0);
 
 		sprite.setSize(1, sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
@@ -61,14 +54,8 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		var_playerpos.y = -sprite.getHeight() / 2;
 
 		var_thumb = new Thumb(0, 0);
-
-		var_thumbTarget.x = var_thumb.getWidth() / 2;
-		var_thumbTarget.y = var_thumb.getHeight() / 2;
-
 		sprite.setPosition(var_playerpos.x, var_playerpos.y);
-		var_thumb.setPosition(var_thumbTarget.x, var_thumbTarget.y);
-		
-		
+
 		// initialise queries
 		planetDistance = 
 				new EntityQueryManager.TypedDistanceQuery(var_playerpos, Planet.class);
@@ -81,13 +68,8 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 
 		SpriteBatch batch = Engine.Batch();
 		batch.begin();
-		sprite.setPosition(var_playerpos.x - sprite.getWidth() / 2, var_playerpos.y
-				- sprite.getHeight() / 2);
-		var_thumb.setPosition(var_thumbPos.x, var_thumbPos.y);
-		// System.out.println("sprite.getHeight()" + sprite.getHeight());
-
-		// draw
-		sprite.draw(batch); // draw the player
+		sprite.setPosition(var_playerpos.x  -sprite.getWidth() / 2 ,var_playerpos.y  -sprite.getHeight() / 2 ) ;
+		sprite.draw(batch);				//draw the player
 		batch.end();
 	}
 
@@ -155,21 +137,21 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			}
 		}
 	}
-	
+
 	@Override
 	public void NewInput(Input input)
 	{
-		// shoot thumb
-		if (input.isTouched() && !var_isThumbing)
+
+		if(input.isTouched())
 		{
-			var_thumbTarget.x = input.getX();
-			var_thumbTarget.y = input.getY();
-
-			Ray r = H2G2Game.camera.getPickRay(var_thumbTarget.x, var_thumbTarget.y);
-
-			var_thumbTarget.x = r.origin.x;
-			var_thumbTarget.y = r.origin.y;
-			var_isThumbing = true;
+			float inX = input.getX() ;
+			float inY = input.getY() ;
+			
+			Ray r = H2G2Game.camera.getPickRay(inX, inY);
+			//System.out.println("PlayerPosWorld "+r.origin);
+			System.out.println("flal");
+			var_thumb.setPosition(var_playerpos.x, var_playerpos.y);
+			var_thumb.setDirection(r.origin.x, r.origin.y);
 		}
 	}
 
