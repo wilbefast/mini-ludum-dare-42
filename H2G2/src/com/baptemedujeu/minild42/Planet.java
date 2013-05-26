@@ -16,7 +16,7 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	private Vector2 pos;
 	private Sprite sprite;
 	
-	public Planet(float x, float y)
+	public Planet(float x, float y, float r)
 	{
 		// register
 		Engine.DisplayMaster().Add(this);
@@ -29,7 +29,7 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		Texture t = Engine.ResourceManager().GetTexture("planet"+(Math.random()>0.5?"":"2"));
 		TextureRegion tr = new TextureRegion(t, 0, 0, 128, 128);
 		sprite = new Sprite(tr);
-		sprite.setSize(1.0f, sprite.getHeight() / sprite.getWidth());
+		sprite.setSize(r, r * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getWidth() / 2);
 		sprite.rotate((float) (Math.random()*360));
