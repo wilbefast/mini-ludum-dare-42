@@ -4,7 +4,9 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
 import com.jackamikaz.gameengine.Engine;
+import com.jackamikaz.gameengine.SpatialEntity;
 import com.jackamikaz.gameengine.UpdatedEntity;
 
 public abstract class EntityQueryManager
@@ -13,6 +15,53 @@ public abstract class EntityQueryManager
 	public static abstract class Query
 	{
 		public abstract float evaluate(UpdatedEntity e);
+	}
+	
+	public static class CollisionQuery extends Query
+	{
+		Vector2 colliderPos;
+		float colliderRadius;
+		
+		public CollisionQuery(Vector2 _colliderPos, float _colliderRadius)
+		{
+			colliderPos = _colliderPos;
+			colliderRadius = _colliderRadius;
+		}
+		
+		@Override
+		public float evaluate(UpdatedEntity e)
+		{
+			if(e instanceof SpatialEntity)
+			{
+				SpatialEntity se = (SpatialEntity)e;
+				
+				Vector2 entityPos = se.getPosition();
+				float entityRadius = se.getRadius();
+				
+				return (entityPos.dst(colliderPos) < colliderRadius + entityRadius ? 
+									1.0f : 0.0f);
+			}
+			else
+				return 0;
+		}
+		
+	}
+	
+	public static class TypedCollisionQuery extends CollisionQuery
+	{
+		private Class<?> collisionType;
+
+		public TypedCollisionQuery(Vector2 _colliderPos, float _colliderRadius, 
+																Class<?> _colliderType)
+		{
+			super(_colliderPos, _colliderRadius);
+			collisionType = _colliderType;
+		}
+		
+		public float evaluate(UpdatedEntity e)
+		{
+			return (collisionType.isInstance(e)) ? super.evaluate(e) : 0.0f;
+		}
 	}
 	
 	
