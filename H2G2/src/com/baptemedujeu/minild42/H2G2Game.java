@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.jackamikaz.gameengine.Engine;
 
 public class H2G2Game implements ApplicationListener 
@@ -20,6 +21,7 @@ public class H2G2Game implements ApplicationListener
 	private SpriteBatch gui;
 	private Texture gui_texture;
 	private Sprite mothership_arrow;
+	
 	
 	@Override
 	public void create()
@@ -38,7 +40,7 @@ public class H2G2Game implements ApplicationListener
 		// ... mothership arrow
 		TextureRegion region = new TextureRegion(gui_texture, 0, 0, 128, 256);
 		mothership_arrow = new Sprite(region);
-		mothership_arrow.setPosition(0.0f, 0.0f);
+		mothership_arrow.setPosition(90.0f, 30.0f);
 		mothership_arrow.setSize(100.0f, 100.0f*mothership_arrow.getHeight() / mothership_arrow.getWidth());
 		mothership_arrow.setOrigin(mothership_arrow.getWidth() / 2, mothership_arrow.getHeight() / 2);
 
@@ -55,6 +57,8 @@ public class H2G2Game implements ApplicationListener
 		Engine.Quit();
 	}
 
+	private static final Vector2 toMothership = new Vector2();
+	
 	@Override
 	public void render()
 	{
@@ -69,6 +73,8 @@ public class H2G2Game implements ApplicationListener
 		world.end();
 		
 		// gui
+		toMothership.set(level.mother.getPosition()).sub(level.hiker.getPosition());
+		mothership_arrow.setRotation(toMothership.angle() + level.hiker.currentCameraAngle + 90);
 		gui.begin();
 			mothership_arrow.draw(gui);
 		gui.end();
@@ -81,6 +87,7 @@ public class H2G2Game implements ApplicationListener
 	//	camera.setToOrtho(false);
 		camera.update();
 		Engine.DisplayMaster().UdpateWidthHeight(width, height);
+		gui.setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, width, height));
 	}
 
 	@Override
