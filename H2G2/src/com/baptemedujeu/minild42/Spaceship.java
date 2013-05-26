@@ -1,5 +1,6 @@
 package com.baptemedujeu.minild42;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,6 +18,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	
 	
 	private Sprite sprite;
+	private Sprite trail;
 	
 	private Vector2 orbitCentre;
 	private float orbitRadius;
@@ -47,11 +49,24 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		sprite.setSize(1, size);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setPosition(pos.x, pos.y);
+		
+		
+		
+		t = Engine.ResourceManager().GetTexture("trail");
+		tr = new TextureRegion(t, 0, 0, 256, 256);
+		trail = new Sprite(tr);
+		size = (trail.getHeight() / trail.getWidth());
+		trail.setSize(1, -size*Math.signum(orbitSpeed));
+		trail.setOrigin(trail.getWidth() / 2, trail.getHeight() / 2);
+		trail.scale(orbitRadius*2-sprite.getWidth()+0.25f);
+		trail.setPosition(orbitCentre.x-trail.getWidth()/2, orbitCentre.y-trail.getHeight()/2);
+		trail.setColor(0, 0.5f, 1, 1);
 	}
 
 	@Override
 	public void Display(float lerp)
-	{
+	{	
+		trail.draw(Engine.Batch());
 		sprite.draw(Engine.Batch());
 	}
 
@@ -68,8 +83,9 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		
 		pos.x = (float)(orbitCentre.x + Math.cos(orbitAngle)*orbitRadius);
 		pos.y = (float)(orbitCentre.y + Math.sin(orbitAngle)*orbitRadius);
+		//trail.setPosition(pos.x - trail.getWidth()/2, pos.y - trail.getHeight()/2);
+		trail.setRotation((float)(180*orbitAngle / Math.PI) + 180);
 		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - sprite.getHeight()/2);
-		
 		sprite.setRotation((float)(180*orbitAngle / Math.PI) + Math.signum(orbitSpeed)*90.0f-90);
 	}
 	
