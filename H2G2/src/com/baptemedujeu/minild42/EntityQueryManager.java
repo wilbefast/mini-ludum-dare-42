@@ -64,6 +64,47 @@ public abstract class EntityQueryManager
 		}
 	}
 	
+	public static class DistanceQuery extends Query
+	{
+		private Vector2 referencePoint;
+		
+		public DistanceQuery(Vector2 _referencePoint)
+		{
+			referencePoint = _referencePoint;
+		}
+		
+		@Override
+		public float evaluate(UpdatedEntity e)
+		{
+			if(e instanceof SpatialEntity)
+			{
+				SpatialEntity se = (SpatialEntity)e;
+				return se.getPosition().dst(referencePoint);
+			}
+			else
+				return Float.MAX_VALUE;
+		}
+		
+	}
+	
+	public static class TypedDistanceQuery extends DistanceQuery
+	{
+		private Class<?> collisionType;
+		
+		public TypedDistanceQuery(Vector2 _referencePoint, Class<?> _colliderType)
+		{
+			super(_referencePoint);
+		}
+		
+		@Override
+		public float evaluate(UpdatedEntity e)
+		{
+			return (collisionType.isInstance(e)) ? super.evaluate(e) : Float.MAX_VALUE;
+		}
+	}
+	
+	
+	
 	
 	//! STATIC VARIABLES
 	private static List<UpdatedEntity> queryResult = new LinkedList<UpdatedEntity>();

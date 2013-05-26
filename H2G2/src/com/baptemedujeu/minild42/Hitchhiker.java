@@ -88,7 +88,12 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	@Override
 	public void Update(float deltaT)
 	{
-
+		// GRAVITY
+		EntityQueryManager.getMin(qry);
+		
+		
+		
+		// THUMB
 		if (var_isThumbing)
 		{
 			var_ThumbDelta += deltaT * var_ThumbSpeed;
