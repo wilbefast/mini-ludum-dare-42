@@ -1,5 +1,8 @@
+texture bg1 background1.PNG
 texture hitchhiker hitchhiker.png
-texture spaceship mothership.png
+texture mothership mothership.png
+texture spaceship spaceship.png
+texture trail trail.png
 texture planet planet.png
 texture planet2 planet2.png
 texture enemy enemy.png

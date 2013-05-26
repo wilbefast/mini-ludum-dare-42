@@ -48,11 +48,12 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 		time = 0;
 		// sprite
 		Texture t = Engine.ResourceManager().GetTexture("thumb");
-		TextureRegion tr = new TextureRegion(t, 0, 0, 64, 64);
+		TextureRegion tr = new TextureRegion(t, 0, 0, 128, 128);
 		sprite = new Sprite(tr);
-		sprite.setSize(5.0f, 5.0f * sprite.getHeight() / sprite.getWidth());
+		sprite.setSize(2.0f, 2.0f * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getHeight() / 2);
+		sprite.rotate(direction.angle());
 		
 		thingDistance = 
 				new EntityQueryManager.Query(){
