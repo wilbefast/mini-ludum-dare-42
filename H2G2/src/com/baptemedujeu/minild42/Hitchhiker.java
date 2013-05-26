@@ -20,15 +20,15 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 {
 
 	private Sprite sprite;
-	private Texture var_tex;
-	private Vector2 var_playerpos;
+	private Texture texture;
+	private Vector2 pos;
 	
 	// camera
 	private float desiredCameraAngle = 0.0f;
 	private float currentCameraAngle = 0.0f;
 	private static final float CAMERA_ROTATE_SPEED = 260.0f;
-	private float var_thumb_time_since;
-	private float var_thumb_cooldown = 0.3f;
+	private float thumb_time_since;
+	private float thumb_cooldown = 0.3f;
 	
 	private SpatialEntity var_falltowards;
 
@@ -42,23 +42,23 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		Engine.UpdateMaster().Add(this);
 		Engine.InputMaster().Add(this);
 
-		var_playerpos = new Vector2(x, y);
+		pos = new Vector2(x, y);
 		H2G2Game.camera.position.set(x, y, 0);
 		H2G2Game.camera.update();
 
-		var_tex = Engine.ResourceManager().GetTexture("hitchhiker");
-		TextureRegion region = new TextureRegion(var_tex, 0, 0, 64, 64);
+		texture = Engine.ResourceManager().GetTexture("hitchhiker");
+		TextureRegion region = new TextureRegion(texture, 0, 0, 64, 64);
 		sprite = new Sprite(region);
-		sprite.setPosition(var_playerpos.x, var_playerpos.y);
+		sprite.setPosition(pos.x, pos.y);
 		sprite.setSize(1, sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
-		var_thumb_cooldown = 0.3f;
-		var_thumb_time_since = 0;
+		thumb_cooldown = 0.3f;
+		thumb_time_since = 0;
 		
 		// initialise queries
 		planetDistance = 
-				new EntityQueryManager.TypedDistanceQuery(var_playerpos, Planet.class);
+				new EntityQueryManager.TypedDistanceQuery(pos, Planet.class);
 		
 		var_falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
 		System.out.println(var_falltowards);
@@ -71,7 +71,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 
 		SpriteBatch batch = Engine.Batch();
 		batch.begin();
-		sprite.setPosition(var_playerpos.x  -sprite.getWidth() / 2 ,var_playerpos.y  -sprite.getHeight() / 2 ) ;
+		sprite.setPosition(pos.x  -sprite.getWidth() / 2 ,pos.y  -sprite.getHeight() / 2 ) ;
 		sprite.draw(batch);				//draw the player
 		batch.end();
 	}
@@ -101,18 +101,18 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		if (var_falltowards==null) {
 			var_falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
 		}
-		var_thumb_time_since=Math.max(0, var_thumb_time_since-deltaT);
+		thumb_time_since=Math.max(0, thumb_time_since-deltaT);
 		
 		// GRAVITY
 		//Planet nearestPlanet = (Planet)(EntityQueryManager.getMin(planetDistance));
 		
 		Vector2 toPlanet = 
-				(new Vector2()).set(var_falltowards.getPosition()).sub(var_playerpos);
+				(new Vector2()).set(var_falltowards.getPosition()).sub(pos);
 		float distanceToPlanet = toPlanet.len();
 		if(distanceToPlanet > var_falltowards.getRadius() + this.getRadius())
 		{
 			desiredCameraAngle = toPlanet.angle() + 90;
-			var_playerpos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
+			pos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
 		}
 		
 		// reset camera angle
@@ -136,15 +136,15 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public void NewInput(Input input)
 	{
 
-		if(input.isTouched() && var_thumb_time_since<=0)
+		if(input.isTouched() && thumb_time_since<=0)
 		{
-			var_thumb_time_since = var_thumb_cooldown;
+			thumb_time_since = thumb_cooldown;
 
 			Vector3 in = new Vector3(input.getX(), input.getY(), 0.0f);
 			H2G2Game.camera.unproject(in);
 			
-			Thumb thmb = new Thumb(var_playerpos.x, var_playerpos.y);
-			thmb.setDirection(in.x - var_playerpos.x, in.y - var_playerpos.y);
+			Thumb thmb = new Thumb(pos.x, pos.y);
+			thmb.setDirection(in.x - pos.x, in.y - pos.y);
 			
 			
 		}
@@ -154,7 +154,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	//! SPATIAL ENTITY
 	
 	@Override
-	public Vector2 getPosition() { return var_playerpos; }
+	public Vector2 getPosition() { return pos; }
 
 	@Override
 	public float getRadius() { return 0.5f; }
