@@ -51,11 +51,11 @@ public class Background implements DisplayedEntity {
 		sprite2.setPosition(xoff+campos.x*0.6f, yoff+campos.y*0.6f);
 		sprite3.setPosition(xoff+campos.x*0.4f, yoff+campos.y*0.4f);
 		SpriteBatch batch = Engine.Batch();
-		batch.begin();
+		//batch.begin();
 			sprite1.draw(batch);
 			sprite2.draw(batch);
 			sprite3.draw(batch);
-		batch.end();
+		//batch.end();
 
 	}
 

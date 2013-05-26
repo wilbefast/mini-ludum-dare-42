@@ -15,6 +15,7 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 {
 	private Vector2 pos;
 	private Sprite sprite;
+	private float turnSpeed;
 	
 	public Planet(float x, float y, float r)
 	{
@@ -24,6 +25,10 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		
 		// position
 		pos = new Vector2(x, y);
+		
+		// spin
+		turnSpeed = (float)((Math.random() > 0.5 ? - 1 : 1)
+								*(10.0f + Math.random()*30.0f));
 		
 		// sprite
 		Texture t = Engine.ResourceManager().GetTexture("planet"+(Math.random()>0.5?"":"2"));
@@ -38,15 +43,13 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	@Override
 	public void Update(float deltaT)
 	{
+		sprite.rotate(turnSpeed * deltaT);
 	}
 
 	@Override
 	public void Display(float lerp)
 	{
-		SpriteBatch batch = Engine.Batch();
-		batch.begin();
-			sprite.draw(batch);
-		batch.end();
+		sprite.draw( Engine.Batch());
 	}
 
 	@Override

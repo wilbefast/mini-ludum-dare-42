@@ -11,7 +11,17 @@ public class Level
 	private int level_width = 64, level_height = 64;
 	public Hitchhiker hiker;
 	
-	private void parseShips(XmlReader.Element og)
+	private void parseMotherships(XmlReader.Element og)
+	{
+		for(XmlReader.Element o : og.getChildrenByName("object"))
+		{
+			float x = o.getFloatAttribute("x")/level_width, 
+						y = o.getFloatAttribute("y")/level_height;
+			new Mothership(x, y);
+		}
+	}
+	
+	private void parseSpaceships(XmlReader.Element og)
 	{
 		for(XmlReader.Element o : og.getChildrenByName("object"))
 		{
@@ -57,11 +67,13 @@ public class Level
 			{
 				String groupename = og.getAttribute("name");
 				if("ships".equals(groupename))
-					parseShips(og);
+					parseSpaceships(og);
 				else if("planets".equals(groupename))
 					parsePlanets(og);
 				else if("hitchhikers".equals(groupename))
 					parseHitchhikers(og);
+				else if("motherships".equals(groupename))
+					parseMotherships(og);
 			}
 		}
 		catch(IOException e)

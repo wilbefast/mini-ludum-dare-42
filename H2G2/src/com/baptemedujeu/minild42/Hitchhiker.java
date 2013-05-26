@@ -66,20 +66,16 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	@Override
 	public void Display(float lerp)
 	{
-
-		SpriteBatch batch = Engine.Batch();
-		batch.begin();
 		if ((!(falltowards instanceof Spaceship)) || pos.dst(falltowards.getPosition())>0.5) {
 			sprite.setPosition(pos.x  -sprite.getWidth() / 2 , pos.y  -sprite.getHeight() / 2 ) ;
-			sprite.draw(batch);				//draw the player
+			sprite.draw(Engine.Batch());				//draw the player
 		}
-		batch.end();
 	}
 
 	@Override
 	public int GetDisplayRank()
 	{
-		return DisplayOrder.Render2D.ordinal();
+		return DisplayOrder.Render2DLast.ordinal();
 	}
 
 	private static float minabs(float v, float positivevalue)
