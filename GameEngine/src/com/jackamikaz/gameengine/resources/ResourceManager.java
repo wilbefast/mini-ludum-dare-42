@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -44,6 +45,7 @@ public class ResourceManager {
 	public SpriteLayout GetLayout(String name) {return (SpriteLayout)(GetImpl(name));}
 	public Sound GetSound(String name) {return (Sound)(GetImpl(name));}
 	public SoundCollection GetSoundCollection(String name) {return (SoundCollection)(GetImpl(name));}
+	public Music GetMusic(String name) {return (Music)(GetImpl(name));}
 	public float GetFloat(String name) {return (Float)(GetImpl(name));}
 	
 	public String[] ExtractResourceNameOfType(Class<?> cl) {
@@ -93,6 +95,7 @@ public class ResourceManager {
 				if (!AddResource(new ResSpriteLayout()		, tokens, 1))
 				if (!AddResource(new ResSound()				, tokens, 1))
 				if (!AddResource(new ResSoundCollection()	, tokens, 0))
+				if (!AddResource(new ResMusic()				, tokens, 1))
 					 AddResource(new ResFloat()				, tokens, 0);
 				
 				line = reader.readLine();

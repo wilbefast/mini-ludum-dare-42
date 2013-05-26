@@ -2,6 +2,7 @@ package com.baptemedujeu.minild42;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -47,6 +48,11 @@ public class H2G2Game implements ApplicationListener
 		
 		// level
 		level = new Level("test.tmx");
+		
+		// music
+		Music music = Engine.ResourceManager().GetMusic("music");
+		music.setLooping(true);
+		music.play();
 	}
 
 	@Override

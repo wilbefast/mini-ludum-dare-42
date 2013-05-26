@@ -11,3 +11,4 @@ texture planet planet.png
 texture planet2 planet2.png
 texture enemy enemy.png
 texture thumb thumb.png
+music music h2g2.ogg
