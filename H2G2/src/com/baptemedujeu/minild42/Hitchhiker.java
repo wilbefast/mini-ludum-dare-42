@@ -77,7 +77,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	@Override
 	public int GetDisplayRank()
 	{
-		return DisplayOrder.Render2D.ordinal();
+		return DisplayOrder.Render2DLast.ordinal();
 	}
 
 	private static float minabs(float v, float positivevalue)
