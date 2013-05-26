@@ -128,11 +128,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			{
 				float power = thumbMinPower + (thumbMaxPower - thumbMinPower) * thumbLoad;
 				thumbLoad = 0.0f;
-				if ((falltowards instanceof Spaceship)) {
-					new Thumb(falltowards.getPosition().x, falltowards.getPosition().y, mousePos.x - falltowards.getPosition().x, mousePos.y - falltowards.getPosition().y, power, this, falltowards);
-				} else {
-					new Thumb(pos.x, pos.y, mousePos.x - pos.x, mousePos.y - pos.y, power, this, falltowards);
-				}
+				new Thumb(pos.x, pos.y, mousePos.x - pos.x, mousePos.y - pos.y, power, this, falltowards);
 			}
 		}
 		
@@ -141,11 +137,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			Vector2 pToM = new Vector2(mousePos.x - pos.x, mousePos.y - pos.y);
 			pToM.nor().scl(0.5f);
 			arrow.setRegion(arrowSheet[(int)(thumbLoad * (float)arrowSheet.length-1)]);
-			if (falltowards instanceof Spaceship) {
-				arrow.setPosition(falltowards.getPosition().x + pToM.x -arrow.getOriginX() , falltowards.getPosition().y + pToM.y -arrow.getOriginY() ) ;
-			} else {
-				arrow.setPosition(pos.x + pToM.x -arrow.getOriginX() , pos.y + pToM.y -arrow.getOriginY() ) ;
-			}
+			arrow.setPosition(pos.x + pToM.x -arrow.getOriginX() , pos.y + pToM.y -arrow.getOriginY() ) ;
 			arrow.setRotation(pToM.angle() - 90);
 		}
 		
