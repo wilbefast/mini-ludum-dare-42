@@ -32,12 +32,13 @@ public class H2G2Game implements ApplicationListener
 		
 		// GUI sprites
 		gui = new SpriteBatch();
+		gui.setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, w, h));
 		gui_texture = Engine.ResourceManager().GetTexture("mothership_arrow");
 		// ... mothership arrow
-		TextureRegion region = new TextureRegion(gui_texture, 0, 0, 64, 64);
+		TextureRegion region = new TextureRegion(gui_texture, 0, 0, 128, 256);
 		mothership_arrow = new Sprite(region);
 		mothership_arrow.setPosition(0.0f, 0.0f);
-		mothership_arrow.setSize(1, mothership_arrow.getHeight() / mothership_arrow.getWidth());
+		mothership_arrow.setSize(100.0f, 100.0f*mothership_arrow.getHeight() / mothership_arrow.getWidth());
 		mothership_arrow.setOrigin(mothership_arrow.getWidth() / 2, mothership_arrow.getHeight() / 2);
 
 		// camera
@@ -53,8 +54,6 @@ public class H2G2Game implements ApplicationListener
 		Engine.Quit();
 	}
 
-	private static final Matrix4 IDENTITY = new Matrix4();
-	
 	@Override
 	public void render()
 	{
