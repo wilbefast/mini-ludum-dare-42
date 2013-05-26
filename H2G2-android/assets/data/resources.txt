@@ -1,6 +1,7 @@
 texture bg1 background1.PNG
 texture hitchhiker hitchhiker.png
 texture mothership mothership.png
+texture mothership_arrow mothership_arrow.png
 texture spaceship spaceship1.png
 texture spaceship_occupied spaceship1_used.png
 texture trail trail.png
