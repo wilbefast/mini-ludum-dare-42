@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jackamikaz.gameengine.DisplayedEntity;
@@ -29,6 +30,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	private static final float CAMERA_ROTATE_SPEED = 180.0f;
 	
 	private SpatialEntity falltowards;
+	private float landAngle;
 
 	
 	private EntityQueryManager.TypedDistanceQuery planetDistance;
@@ -112,8 +114,16 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 				desiredCameraAngle = (float) (sp.getRotation()*(180/Math.PI)) + 90*sign - 90;
 			} else {
 				desiredCameraAngle = toPlanet.angle() + 90;
+				landAngle = falltowards.getRotation() - desiredCameraAngle - 90;
 			}
 			pos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
+		}
+		else if (falltowards instanceof Planet)
+		{
+			float r = falltowards.getRotation() - landAngle;
+			float d = (falltowards.getRadius() + this.getRadius()) * 0.999f;
+			pos.set(falltowards.getPosition()).add(MathUtils.cosDeg(r)*d,MathUtils.sinDeg(r)*d);
+			desiredCameraAngle = r - 90;
 		}
 		
 		// reset camera angle
