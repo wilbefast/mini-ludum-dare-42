@@ -84,7 +84,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	public Vector2 getPosition() { return pos; }
 
 	@Override
-	public float getRadius() { return sprite.getWidth()*0.5f; }
+	public float getRadius() { return 0.1f; }
 
 	@Override
 	public float getWidth() { return sprite.getWidth(); }

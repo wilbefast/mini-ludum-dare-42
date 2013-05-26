@@ -69,8 +69,10 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 
 		SpriteBatch batch = Engine.Batch();
 		batch.begin();
-		sprite.setPosition(pos.x  -sprite.getWidth() / 2 , pos.y  -sprite.getHeight() / 2 ) ;
-		sprite.draw(batch);				//draw the player
+		if ((!(falltowards instanceof Spaceship)) || pos.dst(falltowards.getPosition())>0.5) {
+			sprite.setPosition(pos.x  -sprite.getWidth() / 2 , pos.y  -sprite.getHeight() / 2 ) ;
+			sprite.draw(batch);				//draw the player
+		}
 		batch.end();
 	}
 
@@ -169,8 +171,11 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		{
 			Vector3 in = new Vector3(input.getX(), input.getY(), 0.0f);
 			H2G2Game.camera.unproject(in);
-			
-			Thumb thmb = new Thumb(pos.x, pos.y, in.x - pos.x, in.y - pos.y, 15.0f, this, falltowards);
+			if ((falltowards instanceof Spaceship)) {
+				Thumb thmb = new Thumb(falltowards.getPosition().x, falltowards.getPosition().y, in.x - falltowards.getPosition().x, in.y - falltowards.getPosition().y, 15.0f, this, falltowards);
+			} else {
+				Thumb thmb = new Thumb(pos.x, pos.y, in.x - pos.x, in.y - pos.y, 15.0f, this, falltowards);
+			}
 		}
 	}
 
