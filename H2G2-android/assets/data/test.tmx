@@ -33,7 +33,7 @@
   <object x="576" y="1792" width="96" height="96">
    <ellipse/>
   </object>
-  <object x="192" y="1664" width="64" height="64">
+  <object x="160" y="1664" width="96" height="96">
    <ellipse/>
   </object>
   <object x="672" y="1536" width="192" height="192">
@@ -77,6 +77,6 @@
   </object>
  </objectgroup>
  <objectgroup color="#00aa00" name="hitchhikers" width="64" height="64">
-  <object x="128" y="1632" width="32" height="32"/>
+  <object x="192" y="1632" width="32" height="32"/>
  </objectgroup>
 </map>
