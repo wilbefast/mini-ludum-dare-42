@@ -27,8 +27,9 @@ public class Level
 		for(XmlReader.Element o : og.getChildrenByName("object"))
 		{
 			float x = o.getFloatAttribute("x")/level_width, 
-						y = o.getFloatAttribute("y")/level_height;
-			new Planet(x, y);
+						y = o.getFloatAttribute("y")/level_height,
+						r = o.getFloatAttribute("width")/2/level_width;
+			new Planet(x, y, r);
 		}
 	}
 	
