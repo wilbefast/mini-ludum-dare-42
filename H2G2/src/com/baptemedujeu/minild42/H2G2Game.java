@@ -73,8 +73,8 @@ public class H2G2Game implements ApplicationListener
 		world.end();
 		
 		// gui
-		toMothership.set(level.mother.getPosition()).sub(level.hiker.getPosition());
-		mothership_arrow.setRotation(toMothership.angle() + level.hiker.currentCameraAngle + 90);
+		toMothership.set(level.mother.getPosition()).sub(camera.position.x, camera.position.y);
+		mothership_arrow.setRotation(toMothership.angle() - 90);
 		gui.begin();
 			mothership_arrow.draw(gui);
 		gui.end();

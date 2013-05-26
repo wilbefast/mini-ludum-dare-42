@@ -40,6 +40,15 @@
   <object x="128" y="1504" width="352" height="352">
    <ellipse/>
   </object>
+  <object x="1376" y="64" width="352" height="352">
+   <ellipse/>
+  </object>
+  <object x="1632" y="32" width="352" height="352">
+   <ellipse/>
+  </object>
+  <object x="1632" y="320" width="352" height="352">
+   <ellipse/>
+  </object>
  </objectgroup>
  <objectgroup color="#0000ff" name="planets" width="64" height="64">
   <object x="576" y="1792" width="96" height="96">
@@ -72,7 +81,7 @@
   <object x="1856" y="992" width="160" height="160">
    <ellipse/>
   </object>
-  <object x="1472" y="96" width="352" height="352">
+  <object x="1696" y="416" width="128" height="128">
    <ellipse/>
   </object>
   <object x="1376" y="1024" width="64" height="64">
@@ -87,7 +96,7 @@
   <object x="1568" y="960" width="96" height="96">
    <ellipse/>
   </object>
-  <object x="224" y="1536" width="64" height="64">
+  <object x="736" y="1376" width="64" height="64">
    <ellipse/>
   </object>
   <object x="352" y="1632" width="64" height="64">
@@ -104,6 +113,6 @@
   <object x="192" y="1632" width="32" height="32"/>
  </objectgroup>
  <objectgroup color="#ffff00" name="motherships" width="64" height="64">
-  <object x="256" y="1632" width="32" height="32"/>
+  <object x="1824" y="96" width="32" height="32"/>
  </objectgroup>
 </map>
