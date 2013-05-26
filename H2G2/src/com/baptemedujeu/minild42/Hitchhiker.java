@@ -55,7 +55,7 @@ public class Hitchhiker implements DisplayedEntity,UpdatedEntity, InputEntity {
 		var_playerpos.x = -sprite.getWidth() / 2;
 		var_playerpos.y = -sprite.getHeight() / 2 ;
 
-		spritethumb.setSize(0.1f, 0.1f * spritethumb.getHeight() / spritethumb.getWidth());
+		spritethumb.setSize(1, spritethumb.getHeight() / spritethumb.getWidth());
 		spritethumb.setOrigin(spritethumb.getWidth() / 2, spritethumb.getHeight() / 2);
 
 		var_thumbTarget.x = -spritethumb.getWidth() / 2;
