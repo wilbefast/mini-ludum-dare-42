@@ -171,6 +171,9 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			pos.set(falltowards.getPosition()).add(MathUtils.cosDeg(r)*d,MathUtils.sinDeg(r)*d);
 			desiredCameraAngle = r - 90;
 		}
+		else if (falltowards instanceof Spaceship) {
+			pos.set(falltowards.getPosition());
+		}
 		
 		if ((falltowards instanceof Spaceship)) {
 			Spaceship sp = (Spaceship) falltowards;
