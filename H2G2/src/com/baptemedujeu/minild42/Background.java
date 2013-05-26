@@ -18,8 +18,8 @@ public class Background implements DisplayedEntity {
 		
 		Engine.DisplayMaster().Add(this);
 		
-		int xsize = 30;
-		int ysize = 30;
+		int xsize = 35;
+		int ysize = 35;
 		
 		Texture t = Engine.ResourceManager().GetTexture("bg1");
 		TextureRegion tr = new TextureRegion(t, 0, 0, 2048, 2048);
@@ -45,8 +45,8 @@ public class Background implements DisplayedEntity {
 		// TODO Auto-generated method stub
 	
 		Vector3 campos = H2G2Game.camera.position;
-		float xoff = -15f;
-		float yoff = -15f;
+		float xoff = -17.5f;
+		float yoff = -17.5f;
 		sprite1.setPosition(-7.5f+campos.x, -7.5f+campos.y);
 		sprite2.setPosition(xoff+campos.x*0.95f, yoff+campos.y*0.95f);
 		sprite3.setPosition(xoff+campos.x*0.85f, yoff+campos.y*0.85f);

@@ -141,7 +141,11 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			Vector2 pToM = new Vector2(mousePos.x - pos.x, mousePos.y - pos.y);
 			pToM.nor().scl(0.5f);
 			arrow.setRegion(arrowSheet[(int)(thumbLoad * (float)arrowSheet.length-1)]);
-			arrow.setPosition(pos.x + pToM.x -arrow.getOriginX() , pos.y + pToM.y -arrow.getOriginY() ) ;
+			if (falltowards instanceof Spaceship) {
+				arrow.setPosition(falltowards.getPosition().x + pToM.x -arrow.getOriginX() , falltowards.getPosition().y + pToM.y -arrow.getOriginY() ) ;
+			} else {
+				arrow.setPosition(pos.x + pToM.x -arrow.getOriginX() , pos.y + pToM.y -arrow.getOriginY() ) ;
+			}
 			arrow.setRotation(pToM.angle() - 90);
 		}
 		
