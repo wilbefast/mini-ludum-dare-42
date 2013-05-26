@@ -29,7 +29,7 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		Texture t = Engine.ResourceManager().GetTexture("planet");
 		TextureRegion tr = new TextureRegion(t, 0, 0, 128, 128);
 		sprite = new Sprite(tr);
-		sprite.setSize(1.0f, sprite.getHeight() / sprite.getWidth());
+		sprite.setSize(4.0f, 4.0f * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getWidth() / 2);
 	}

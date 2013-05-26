@@ -30,7 +30,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	private float thumb_time_since;
 	private float thumb_cooldown = 0.3f;
 	
-	private SpatialEntity var_falltowards;
+	private SpatialEntity falltowards;
 
 	
 	private EntityQueryManager.TypedDistanceQuery planetDistance;
@@ -59,9 +59,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		// initialise queries
 		planetDistance = 
 				new EntityQueryManager.TypedDistanceQuery(pos, Planet.class);
-		
-		var_falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
-		System.out.println(var_falltowards);
 
 	}
 
@@ -98,8 +95,10 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public void Update(float deltaT)
 	{
 	
-		if (var_falltowards==null) {
-			var_falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
+		if (falltowards == null) 
+		{
+			falltowards = (SpatialEntity)(EntityQueryManager.getMin(planetDistance));
+			System.out.println("FALLING TOWARDS: " + falltowards);
 		}
 		thumb_time_since=Math.max(0, thumb_time_since-deltaT);
 		
@@ -107,9 +106,9 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		//Planet nearestPlanet = (Planet)(EntityQueryManager.getMin(planetDistance));
 		
 		Vector2 toPlanet = 
-				(new Vector2()).set(var_falltowards.getPosition()).sub(pos);
+				(new Vector2()).set(falltowards.getPosition()).sub(pos);
 		float distanceToPlanet = toPlanet.len();
-		if(distanceToPlanet > var_falltowards.getRadius() + this.getRadius())
+		if(distanceToPlanet > falltowards.getRadius() + this.getRadius())
 		{
 			desiredCameraAngle = toPlanet.angle() + 90;
 			pos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
@@ -126,9 +125,9 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			currentCameraAngle += rotateAmount;
 			H2G2Game.camera.rotate(rotateAmount);
 			sprite.rotate(rotateAmount);
-			
-			H2G2Game.camera.update();
 		}
+		H2G2Game.camera.position.set(pos.x, pos.y, 0);
+		H2G2Game.camera.update();
 			
 	}
 
