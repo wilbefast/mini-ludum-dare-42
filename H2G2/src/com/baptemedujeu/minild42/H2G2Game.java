@@ -21,23 +21,11 @@ public class H2G2Game implements ApplicationListener
 		Engine.Init();
 		Engine.ResourceManager().LoadResourcesFile("resources.txt");
 
-		// Create player character
-		//Hitchhiker player = new Hitchhiker();
-		
 		// camera
 		camera = new OrthographicCamera(15.0f, 15.0f * h / w);
 		
+		// level
 		level = new Level("test.tmx");
-		
-		// Create ships
-		/*new Spaceship(5.0f, 0, 5.0f);
-		new Spaceship(-8.0f, 4.0f, 3.0f);
-		new Spaceship(2.0f, -3.0f, 7.0f);
-		
-		// Create planets
-		new Planet(6.0f, 2.0f);
-		new Planet(-1.0f, 4.0f);
-		new Planet(-5.0f, -5.0f);*/
 	}
 
 	@Override

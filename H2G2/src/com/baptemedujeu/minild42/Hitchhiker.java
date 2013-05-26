@@ -1,13 +1,12 @@
 package com.baptemedujeu.minild42;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jackamikaz.gameengine.DisplayedEntity;
 import com.jackamikaz.gameengine.Engine;
@@ -44,6 +43,8 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		Engine.InputMaster().Add(this);
 
 		var_playerpos = new Vector2(x, y);
+		H2G2Game.camera.position.set(x, y, 0);
+		H2G2Game.camera.update();
 
 		var_tex = Engine.ResourceManager().GetTexture("hitchhiker");
 		TextureRegion region = new TextureRegion(var_tex, 0, 0, 64, 64);
@@ -52,7 +53,6 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		sprite.setSize(1, sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
-		var_thumb = new Thumb(x, y);
 		var_thumb_cooldown = 0.3f;
 		var_thumb_time_since = 0;
 		
@@ -139,14 +139,14 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		if(input.isTouched() && var_thumb_time_since<=0)
 		{
 			var_thumb_time_since = var_thumb_cooldown;
-			float inX = input.getX() ;
-			float inY = input.getY() ;
+
+			Vector3 in = new Vector3(input.getX(), input.getY(), 0.0f);
+			H2G2Game.camera.unproject(in);
 			
-			Ray r = H2G2Game.camera.getPickRay(inX, inY);
 			Thumb thmb = new Thumb(var_playerpos.x, var_playerpos.y);
-			thmb.setDirection(r.origin.x, r.origin.y);
-			//var_thumb.setPosition(var_playerpos.x, var_playerpos.y);
-			//var_thumb.setDirection(r.origin.x, r.origin.y);
+			thmb.setDirection(in.x - var_playerpos.x, in.y - var_playerpos.y);
+			
+			
 		}
 	}
 

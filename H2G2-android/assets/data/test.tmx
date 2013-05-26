@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="64" height="64" tilewidth="32" tileheight="32" backgroundcolor="#c5c5c5">
  <objectgroup color="#ff0000" name="ships" width="64" height="64">
-  <object x="0" y="-32" width="384" height="384">
+  <object x="832" y="672" width="256" height="256">
    <ellipse/>
   </object>
  </objectgroup>
  <objectgroup color="#0000ff" name="planets" width="64" height="64">
-  <object x="160" y="128" width="96" height="96">
+  <object x="960" y="768" width="96" height="96">
    <ellipse/>
   </object>
  </objectgroup>
  <objectgroup color="#00aa00" name="hitchhikers" width="64" height="64">
-  <object x="96" y="64" width="32" height="32"/>
+  <object x="896" y="704" width="32" height="32"/>
  </objectgroup>
 </map>
