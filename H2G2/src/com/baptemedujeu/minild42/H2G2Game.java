@@ -10,7 +10,6 @@ import com.jackamikaz.gameengine.Engine;
 public class H2G2Game implements ApplicationListener 
 {
 	public static OrthographicCamera camera;
-	private Hitchhiker var_hitchhiker ;
 	@Override
 	public void create()
 	{

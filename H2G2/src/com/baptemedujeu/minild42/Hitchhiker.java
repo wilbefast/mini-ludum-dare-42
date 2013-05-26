@@ -30,6 +30,8 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	private float var_ThumbSpeed = 1.0f;
 	private float var_ThumbDelta = 0;
 	private boolean var_isThumbing = false;
+	
+	private EntityQueryManager.TypedDistanceQuery planetDistance;
 
 	public Hitchhiker()
 	{
@@ -60,6 +62,11 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 
 		sprite.setPosition(var_playerpos.x, var_playerpos.y);
 		var_thumb.setPosition(var_thumbTarget.x, var_thumbTarget.y);
+		
+		
+		// initialise queries
+		planetDistance = 
+				new EntityQueryManager.TypedDistanceQuery(var_playerpos, Planet.class);
 
 	}
 
@@ -89,8 +96,13 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public void Update(float deltaT)
 	{
 		// GRAVITY
-		EntityQueryManager.getMin(qry);
+		Planet nearestPlanet = (Planet)(EntityQueryManager.getMin(planetDistance));
 		
+		Vector2 toPlanet = 
+				(new Vector2()).set(nearestPlanet.getPosition()).sub(var_playerpos);
+		float distanceToPlanet = toPlanet.len();
+		if(distanceToPlanet > 2f)
+			var_playerpos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
 		
 		
 		// THUMB
@@ -135,13 +147,13 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public Vector2 getPosition() { return var_playerpos; }
 
 	@Override
-	public float getRadius() { return 10.0f; }
+	public float getRadius() { return 1.0f; }
 
 	@Override
-	public float getWidth() { return 20.0f; }
+	public float getWidth() { return 2.0f; }
 
 	@Override
-	public float getHeight() { return 20.0f; }
+	public float getHeight() { return 2.0f; }
 
 	@Override
 	public float getRotation() { return 0.0f; }
