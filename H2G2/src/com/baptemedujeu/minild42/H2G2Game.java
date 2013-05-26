@@ -32,6 +32,7 @@ public class H2G2Game implements ApplicationListener
 		Engine.Init();
 		Engine.ResourceManager().LoadResourcesFile("resources.txt");
 		
+		new Background();
 		// GUI sprites
 		gui = new SpriteBatch();
 		gui.setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, w, h));
@@ -72,8 +73,8 @@ public class H2G2Game implements ApplicationListener
 		world.end();
 		
 		// gui
-		toMothership.set(level.exit.getPosition()).sub(level.player.getPosition());
-		mothership_arrow.setRotation(toMothership.angle() + level.player.currentCameraAngle + 90);
+		toMothership.set(level.mother.getPosition()).sub(level.hiker.getPosition());
+		mothership_arrow.setRotation(toMothership.angle() + level.hiker.currentCameraAngle + 90);
 		gui.begin();
 			mothership_arrow.draw(gui);
 		gui.end();

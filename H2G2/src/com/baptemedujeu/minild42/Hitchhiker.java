@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
 import com.jackamikaz.gameengine.DisplayedEntity;
 import com.jackamikaz.gameengine.Engine;
 import com.jackamikaz.gameengine.InputEntity;
@@ -30,6 +30,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	private static final float CAMERA_ROTATE_SPEED = 180.0f;
 	
 	private SpatialEntity falltowards;
+	private float landAngle;
 
 	
 	private EntityQueryManager.TypedDistanceQuery planetDistance;
@@ -84,11 +85,11 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 															Math.max(v, -positivevalue));
 	}
 	
-	private static float maxabs(float v, float positivevalue)
+	/*private static float maxabs(float v, float positivevalue)
 	{
 		return (float)((v > 0) ? Math.max(v, positivevalue) : 
 															Math.min(v, -positivevalue));
-	}
+	}*/
 	
 	@Override
 	public void Update(float deltaT)
@@ -113,8 +114,16 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 				desiredCameraAngle = (float) (sp.getRotation()*(180/Math.PI)) + 90*sign - 90;
 			} else {
 				desiredCameraAngle = toPlanet.angle() + 90;
+				landAngle = falltowards.getRotation() - desiredCameraAngle - 90;
 			}
 			pos.add(toPlanet.div(distanceToPlanet).scl(0.1f));
+		}
+		else if (falltowards instanceof Planet)
+		{
+			float r = falltowards.getRotation() - landAngle;
+			float d = (falltowards.getRadius() + this.getRadius()) * 0.999f;
+			pos.set(falltowards.getPosition()).add(MathUtils.cosDeg(r)*d,MathUtils.sinDeg(r)*d);
+			desiredCameraAngle = r - 90;
 		}
 		
 		// reset camera angle
@@ -168,9 +177,9 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			Vector3 in = new Vector3(input.getX(), input.getY(), 0.0f);
 			H2G2Game.camera.unproject(in);
 			if ((falltowards instanceof Spaceship)) {
-				Thumb thmb = new Thumb(falltowards.getPosition().x, falltowards.getPosition().y, in.x - falltowards.getPosition().x, in.y - falltowards.getPosition().y, 15.0f, this, falltowards);
+				new Thumb(falltowards.getPosition().x, falltowards.getPosition().y, in.x - falltowards.getPosition().x, in.y - falltowards.getPosition().y, 15.0f, this, falltowards);
 			} else {
-				Thumb thmb = new Thumb(pos.x, pos.y, in.x - pos.x, in.y - pos.y, 15.0f, this, falltowards);
+				new Thumb(pos.x, pos.y, in.x - pos.x, in.y - pos.y, 15.0f, this, falltowards);
 			}
 		}
 	}

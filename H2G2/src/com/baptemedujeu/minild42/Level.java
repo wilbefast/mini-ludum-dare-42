@@ -8,8 +8,8 @@ import com.badlogic.gdx.utils.XmlReader;
 
 public class Level
 {
-	public Hitchhiker player;
-	public Mothership exit;
+	public Hitchhiker hiker;
+	public Mothership mother;
 	
 	
 	private int level_width = 64, level_height = 64;
@@ -20,7 +20,7 @@ public class Level
 		{
 			float x = o.getFloatAttribute("x")/level_width, 
 						y = o.getFloatAttribute("y")/level_height;
-			exit = new Mothership(x, y);
+			mother = new Mothership(x, y);
 		}
 	}
 	
@@ -53,7 +53,7 @@ public class Level
 			float x = o.getFloatAttribute("x")/level_width, 
 						y = o.getFloatAttribute("y")/level_height, 
 						r = o.getFloatAttribute("width")/2/level_width;
-			player = new Hitchhiker(x + r, y + r);
+			hiker = new Hitchhiker(x + r, y + r);
 		}
 	}
 	
