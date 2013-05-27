@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.XmlReader;
 
 public class Level
@@ -31,7 +32,7 @@ public class Level
 			float x = o.getFloatAttribute("x")/level_width, 
 						y = o.getFloatAttribute("y")/level_height, 
 						r = o.getFloatAttribute("width")/2/level_width;
-			new Spaceship(x + r, y + r, r);
+			new Spaceship(x + r, y + r, r, MathUtils.random(1, 5));
 		}
 	}
 	

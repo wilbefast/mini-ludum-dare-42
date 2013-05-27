@@ -78,6 +78,8 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 
 	public void setFalltowards(SpatialEntity sp)
 	{
+		if (falltowards instanceof Spaceship)
+			((Spaceship) falltowards).SetOccupied(false);
 		falltowards = sp;
 	}
 	
@@ -169,6 +171,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		}
 		else if (falltowards instanceof Spaceship) {
 			pos.set(falltowards.getPosition());
+			((Spaceship) falltowards).SetOccupied(true);
 		}
 		
 		if ((falltowards instanceof Spaceship)) {
