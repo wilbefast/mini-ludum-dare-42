@@ -1,6 +1,6 @@
-texture bg1 background1.PNG
-texture bg2 background2.PNG
-texture bg3 background3.PNG
+texture bg1 background1.png
+texture bg2 background2.png
+texture bg3 background3.png
 texture hitchhiker hitchhiker.png
 texture mothership mothership.png
 texture mothership_used mothership_used.png

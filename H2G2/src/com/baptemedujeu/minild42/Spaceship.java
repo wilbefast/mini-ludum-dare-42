@@ -69,6 +69,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	@Override
 	public void Display(float lerp)
 	{	
+		
 		//trail.draw(Engine.Batch());
 		sprite.draw(Engine.Batch());
 	}
