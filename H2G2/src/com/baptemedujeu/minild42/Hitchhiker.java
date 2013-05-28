@@ -3,6 +3,7 @@ package com.baptemedujeu.minild42;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -60,7 +61,9 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		H2G2Game.camera.update();
 
 		// hitchhiker sprite
-		sprite = new Sprite(Engine.ResourceManager().GetTexture("hitchhiker"));
+		Texture t = Engine.ResourceManager().GetTexture("sprites");
+		TextureRegion tr = new TextureRegion(t, 0, 0, 64, 64);
+		sprite = new Sprite(tr);
 		sprite.setPosition(pos.x, pos.y);
 		sprite.setSize(0.7f, 0.7f);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);

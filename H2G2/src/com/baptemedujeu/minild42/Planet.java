@@ -16,7 +16,7 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	private Sprite sprite;
 	private float turnSpeed;
 	
-	public Planet(float x, float y, float r)
+	public Planet(float x, float y, float r, int colour)
 	{
 		// register
 		Engine.DisplayMaster().Add(this);
@@ -30,20 +30,8 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 								*(10.0f + Math.random()*30.0f));
 		
 		// sprite
-		
-		Texture t;
-		double rand = Math.random();
-		if(rand > 0.333)
-		{
-			if(rand < 0.666)
-				t = Engine.ResourceManager().GetTexture("planet2");
-			else
-				t = Engine.ResourceManager().GetTexture("planet3");
-		}
-		else
-			t = Engine.ResourceManager().GetTexture("planet");
-		
-		TextureRegion tr = new TextureRegion(t, 0, 0, 128, 128);
+		Texture t = Engine.ResourceManager().GetTexture("sprites");
+		TextureRegion tr = new TextureRegion(t, 256, 256 + 128*colour, 128, 128);
 		sprite = new Sprite(tr);
 		sprite.setSize(r, r * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
@@ -66,7 +54,7 @@ public class Planet implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	@Override
 	public int GetDisplayRank()
 	{
-		return DisplayOrder.Render2D.ordinal();
+		return DisplayOrder.Render2DFirst.ordinal();
 	}
 
 	

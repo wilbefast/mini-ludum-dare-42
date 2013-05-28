@@ -2,6 +2,7 @@ package com.baptemedujeu.minild42;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.jackamikaz.gameengine.DisplayedEntity;
 import com.jackamikaz.gameengine.Engine;
@@ -22,14 +23,13 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	private float orbitAngle;
 	public float orbitSpeed;
 	
-	private Vector2 pos;
+	private TextureRegion occupied, unoccupied;
 	
-	private Texture normalTex;
-	private Texture occupiedTex;
+	private Vector2 pos;
 	
 	private float size;
 
-	public Spaceship(float x, float y, float _orbitRadius, int type)
+	public Spaceship(float x, float y, float _orbitRadius, int colour)
 	{
 		// register
 		Engine.DisplayMaster().Add(this);
@@ -44,9 +44,12 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		orbitAngle = 0.0f;
 		
 		// sprite
-		normalTex = Engine.ResourceManager().GetTexture("spaceship"+type);
-		occupiedTex = Engine.ResourceManager().GetTexture("spaceship_occupied"+type);
-		sprite = new Sprite(normalTex);
+		Texture t = Engine.ResourceManager().GetTexture("sprites");
+		
+		unoccupied = new TextureRegion(t, 0, 256 + 128*colour, 128, 128);
+		occupied = new TextureRegion(t, 128, 256 + 128*colour, 128, 128);
+		sprite = new Sprite(unoccupied);
+		
 		float ratio = (sprite.getHeight() / sprite.getWidth());
 		size = sprite.getWidth() / 128.0f;
 		sprite.setSize(size, size*ratio);
@@ -96,7 +99,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	
 	public void setOccupied(boolean b) 
 	{
-		sprite.setTexture(b ? occupiedTex : normalTex);
+		sprite.setRegion(b ? occupied : unoccupied);
 	}
 	
 	

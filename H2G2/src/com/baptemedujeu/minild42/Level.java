@@ -25,25 +25,25 @@ public class Level
 		}
 	}
 	
-	private void parseSpaceships(XmlReader.Element og)
+	private void parseSpaceships(XmlReader.Element og, int colour)
 	{
 		for(XmlReader.Element o : og.getChildrenByName("object"))
 		{
 			float x = o.getFloatAttribute("x")/level_width, 
 						y = o.getFloatAttribute("y")/level_height, 
 						r = o.getFloatAttribute("width")/2/level_width;
-			new Spaceship(x + r, y + r, r, MathUtils.random(1, 4));
+			new Spaceship(x + r, y + r, r, colour);
 		}
 	}
 	
-	private void parsePlanets(XmlReader.Element og)
+	private void parsePlanets(XmlReader.Element og, int colour)
 	{
 		for(XmlReader.Element o : og.getChildrenByName("object"))
 		{
 			float x = o.getFloatAttribute("x")/level_width, 
 						y = o.getFloatAttribute("y")/level_height,
 						r = o.getFloatAttribute("width")/2/level_width;
-			new Planet(x, y, r);
+			new Planet(x, y, r, colour);
 		}
 	}
 	
@@ -70,12 +70,25 @@ public class Level
 			for(XmlReader.Element og : m.getChildrenByName("objectgroup"))
 			{
 				String groupename = og.getAttribute("name");
-				if("ships".equals(groupename))
-					parseSpaceships(og);
-				else if("planets".equals(groupename))
-					parsePlanets(og);
+				
+				if("ships_green".equals(groupename))
+					parseSpaceships(og, 0);
+				else if("ships_orange".equals(groupename))
+					parseSpaceships(og, 1);
+				else if("ships_pink".equals(groupename))
+					parseSpaceships(og, 2);
+
+				else if("planets_green".equals(groupename))
+					parsePlanets(og, 0);
+				else if("planets_orange".equals(groupename))
+					parsePlanets(og, 1);
+				else if("planets_pink".equals(groupename))
+					parsePlanets(og, 2);
+
+				
 				else if("hitchhikers".equals(groupename))
 					parseHitchhikers(og);
+				
 				else if("motherships".equals(groupename))
 					parseMotherships(og);
 			}

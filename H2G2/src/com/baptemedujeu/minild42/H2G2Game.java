@@ -20,13 +20,16 @@ public class H2G2Game implements ApplicationListener
 	
 	// GUI
 	private SpriteBatch gui;
-	private Texture gui_texture;
 	private Sprite mothership_arrow;
 	
 	
 	@Override
 	public void create()
 	{
+		
+		try
+		{
+		
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		
@@ -37,10 +40,10 @@ public class H2G2Game implements ApplicationListener
 		// GUI sprites
 		gui = new SpriteBatch();
 		gui.setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, w, h));
-		gui_texture = Engine.ResourceManager().GetTexture("mothership_arrow");
+		Texture t = Engine.ResourceManager().GetTexture("sprites");
 		// ... mothership arrow
-		TextureRegion region = new TextureRegion(gui_texture, 0, 0, 128, 128);
-		mothership_arrow = new Sprite(region);
+		TextureRegion tr = new TextureRegion(t, 256, 0, 128, 128);
+		mothership_arrow = new Sprite(tr);
 		mothership_arrow.setSize(50.0f, 50.0f*mothership_arrow.getHeight() / mothership_arrow.getWidth());
 		mothership_arrow.setOrigin(mothership_arrow.getWidth() / 2, mothership_arrow.getHeight() / 2);
 
@@ -48,12 +51,18 @@ public class H2G2Game implements ApplicationListener
 		camera = new OrthographicCamera(13.0f, 13.0f * h / w);
 		
 		// level
-		level = new Level("test.tmx");
+		level = new Level("hike1.tmx");
 		
 		// music
 		Music music = Engine.ResourceManager().GetMusic("music");
 		music.setLooping(true);
 		music.play();
+		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -67,15 +76,19 @@ public class H2G2Game implements ApplicationListener
 	@Override
 	public void render()
 	{
+		try
+		{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		// draw and update game world
 		SpriteBatch world = Engine.Batch();
-		world.begin();
-			world.setProjectionMatrix(camera.combined);
-			Engine.ClassicLoop();
-		world.end();
+
+			world.begin();
+				world.setProjectionMatrix(camera.combined);
+				Engine.ClassicLoop();
+			world.end();
+
 		
 		// gui
 		
@@ -97,6 +110,13 @@ public class H2G2Game implements ApplicationListener
 			if(drawCompass)
 				mothership_arrow.draw(gui);
 		gui.end();
+		
+		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 	}
 

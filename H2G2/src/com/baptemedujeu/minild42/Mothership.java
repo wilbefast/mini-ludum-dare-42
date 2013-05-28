@@ -26,9 +26,9 @@ public class Mothership implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		pos = new Vector2(x, y);
 
 		// sprite
-		Texture t = Engine.ResourceManager().GetTexture("mothership");
-		unoccupied = new TextureRegion(t, 0, 0, 256, 256);
-		occupied = new TextureRegion(t, 256, 0, 256, 256);
+		Texture t = Engine.ResourceManager().GetTexture("sprites");
+		unoccupied = new TextureRegion(t, 0, 768, 256, 256);
+		occupied = new TextureRegion(t, 256, 768, 256, 256);
 		sprite = new Sprite(unoccupied);
 		
 		float size = (sprite.getHeight() / sprite.getWidth());
