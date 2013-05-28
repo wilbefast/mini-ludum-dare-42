@@ -79,7 +79,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	public void setFalltowards(SpatialEntity sp)
 	{
 		if (falltowards instanceof Spaceship)
-			((Spaceship) falltowards).SetOccupied(false);
+			((Spaceship) falltowards).setOccupied(false);
 		falltowards = sp;
 	}
 	
@@ -169,9 +169,14 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			pos.set(falltowards.getPosition()).add(MathUtils.cosDeg(r)*d,MathUtils.sinDeg(r)*d);
 			desiredCameraAngle = r - 90;
 		}
-		else if (falltowards instanceof Spaceship) {
+		else if ((falltowards instanceof Spaceship) || (falltowards instanceof Mothership))
+		{
 			pos.set(falltowards.getPosition());
-			((Spaceship) falltowards).SetOccupied(true);
+			
+			if(falltowards instanceof Spaceship) //! FIXME: mothership and spaceship should have the same parent
+				((Spaceship) falltowards).setOccupied(true);
+			else
+				((Mothership) falltowards).setOccupied(true);
 		}
 		
 		if ((falltowards instanceof Spaceship)) {

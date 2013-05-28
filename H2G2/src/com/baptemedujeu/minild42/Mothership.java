@@ -12,6 +12,7 @@ import com.jackamikaz.gameengine.utils.DisplayOrder;
 
 public class Mothership implements DisplayedEntity, UpdatedEntity, SpatialEntity
 {
+	private TextureRegion unoccupied, occupied;
 	private Sprite sprite;
 	private Vector2 pos;
 	
@@ -26,13 +27,27 @@ public class Mothership implements DisplayedEntity, UpdatedEntity, SpatialEntity
 
 		// sprite
 		Texture t = Engine.ResourceManager().GetTexture("mothership");
-		TextureRegion tr = new TextureRegion(t, 0, 0, 1024, 1024);
-		sprite = new Sprite(tr);
+		unoccupied = new TextureRegion(t, 0, 0, 256, 256);
+		occupied = new TextureRegion(t, 256, 0, 256, 256);
+		sprite = new Sprite(unoccupied);
+		
 		float size = (sprite.getHeight() / sprite.getWidth());
 		sprite.setSize(2.5f, 2.5f * size);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setPosition(pos.x, pos.y);
 	}
+	
+	
+	//! OCCUPATION
+	
+	public void setOccupied(boolean b)
+	{
+		sprite.setRegion(b ? occupied : unoccupied);
+	}
+	
+	
+	
+	//! CALLBACKS
 	
 	@Override
 	public void Update(float deltaT)

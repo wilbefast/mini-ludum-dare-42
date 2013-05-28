@@ -93,7 +93,8 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	}
 	
 	
-	public void SetOccupied(boolean b) {
+	public void setOccupied(boolean b) 
+	{
 		sprite.setTexture(b ? occupiedTex : normalTex);
 	}
 	

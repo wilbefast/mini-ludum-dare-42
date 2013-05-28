@@ -32,7 +32,7 @@ public class Level
 			float x = o.getFloatAttribute("x")/level_width, 
 						y = o.getFloatAttribute("y")/level_height, 
 						r = o.getFloatAttribute("width")/2/level_width;
-			new Spaceship(x + r, y + r, r, MathUtils.random(1, 5));
+			new Spaceship(x + r, y + r, r, MathUtils.random(1, 4));
 		}
 	}
 	
