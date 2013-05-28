@@ -29,6 +29,14 @@ public class Level
 	{
 		for(XmlReader.Element o : og.getChildrenByName("object"))
 		{
+			if (o.getChildByName("polyline") != null)
+			{
+				System.out.println("TODO implement polyline");
+				continue;
+			}
+			
+			
+			
 			float x = o.getFloatAttribute("x")/level_width, 
 						y = o.getFloatAttribute("y")/level_height, 
 						r = o.getFloatAttribute("width")/2/level_width;
