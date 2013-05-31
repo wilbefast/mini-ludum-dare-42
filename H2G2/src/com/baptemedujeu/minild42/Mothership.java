@@ -32,7 +32,7 @@ public class Mothership implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		sprite = new Sprite(unoccupied);
 		
 		float size = (sprite.getHeight() / sprite.getWidth());
-		sprite.setSize(2.5f, 2.5f * size);
+		sprite.setSize(80, 80 * size);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setPosition(pos.x, pos.y);
 	}

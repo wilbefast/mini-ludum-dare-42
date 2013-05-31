@@ -51,7 +51,7 @@ public class H2G2Game implements ApplicationListener
 		mothership_arrow.setOrigin(mothership_arrow.getWidth() / 2, mothership_arrow.getHeight() / 2);
 
 		// camera
-		camera = new OrthographicCamera(43.0f, 43.0f * h / w);
+		camera = new OrthographicCamera(416.0f, 416.0f * h / w);
 		camera.rotate(180);
 		
 		// level

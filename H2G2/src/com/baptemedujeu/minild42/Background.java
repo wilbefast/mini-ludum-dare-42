@@ -11,9 +11,11 @@ import com.jackamikaz.gameengine.utils.DisplayOrder;
 
 public class Background implements DisplayedEntity
 {
-	Sprite sprite1;
-	Sprite sprite2;
-	Sprite sprite3;
+	private static final float xoff = -560.5f, yoff = -560.5f;
+	
+	private Sprite sprite1;
+	private Sprite sprite2;
+	private Sprite sprite3;
 
 	public Background()
 	{
@@ -26,7 +28,7 @@ public class Background implements DisplayedEntity
 		Texture t = Engine.ResourceManager().GetTexture("bg1");
 		TextureRegion tr = new TextureRegion(t, 0, 0, 2048, 2048);
 		sprite1 = new Sprite(tr);
-		sprite1.setSize(15, 15 * sprite1.getHeight() / sprite1.getWidth());
+		sprite1.setSize(480, 480 * sprite1.getHeight() / sprite1.getWidth());
 
 		t = Engine.ResourceManager().GetTexture("bg2");
 		tr = new TextureRegion(t, 0, 0, 2048, 2048);
@@ -48,11 +50,10 @@ public class Background implements DisplayedEntity
 		// TODO Auto-generated method stub
 
 		Vector3 campos = H2G2Game.camera.position;
-		float xoff = -17.5f;
-		float yoff = -17.5f;
-		sprite1.setPosition(-7.5f + campos.x, -7.5f + campos.y);
-		sprite2.setPosition(xoff + campos.x * 0.95f, yoff + campos.y * 0.95f);
-		sprite3.setPosition(xoff + campos.x * 0.85f, yoff + campos.y * 0.85f);
+
+		sprite1.setPosition(-240.0f + campos.x, -240.0f + campos.y);
+		sprite2.setPosition(xoff + campos.x * 30.4f, yoff + campos.y * 30.4f);
+		sprite3.setPosition(xoff + campos.x * 27.2f, yoff + campos.y * 27.2f);
 		// SpriteBatch batch = Engine.Batch();
 		// batch.begin();
 		sprite1.draw(Engine.Batch());

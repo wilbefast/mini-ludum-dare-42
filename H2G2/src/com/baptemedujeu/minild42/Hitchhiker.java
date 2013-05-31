@@ -30,8 +30,9 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 	private float thumbLoad;
 	private Vector2 mousePos;
 	private static final float thumbLoadSpeed = 1.0f;
-	private static final float thumbMinPower = 4.5f;
-	private static final float thumbMaxPower = 22.0f;
+	private static final float thumbMinPower = 144.0f;
+	private static final float thumbMaxPower = 704.0f;
+	private static final float gravity = 160.0f;
 
 	// camera
 	private float desiredCameraAngle = 0.0f;
@@ -63,13 +64,13 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		TextureRegion tr = new TextureRegion(t, 0, 0, 64, 64);
 		sprite = new Sprite(tr);
 		sprite.setPosition(pos.x, pos.y);
-		sprite.setSize(0.7f, 0.7f);
+		sprite.setSize(23, 23);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
 		// arrow sprites
 		arrowSheet = Engine.ResourceManager().GetTextureSheet("arrow");
 		arrow = new Sprite(arrowSheet[0]);
-		arrow.setSize(0.5f, 0.5f * arrow.getHeight() / arrow.getWidth());
+		arrow.setSize(16, 16 * arrow.getHeight() / arrow.getWidth());
 		arrow.setOrigin(arrow.getWidth() / 2, 0);
 
 		// initialize queries
@@ -156,13 +157,18 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			arrow.setRotation(pToM.angle() - 90);
 		}
 
-		// GRAVITY
+		/*
+		 * FALLING TOWARDS NOTHING
+		 */
 		if (falltowards == null)
 			falltowards = (SpatialEntity) (EntityQueryManager.getMin(planetDistance));
 
-		Vector2 toPlanet = (new Vector2()).set(falltowards.getPosition()).sub(pos);
-		float distanceToPlanet = toPlanet.len();
-		if (distanceToPlanet > falltowards.getRadius() + this.getRadius())
+		/*
+		 * LANDED ON OBJECT
+		 */
+		Vector2 toDestination = (new Vector2()).set(falltowards.getPosition()).sub(pos);
+		float distanceToDestination = toDestination.len();
+		if (distanceToDestination > (falltowards.getRadius() + this.getRadius()))
 		{
 			if ((falltowards instanceof Spaceship))
 			{
@@ -173,11 +179,16 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 			}
 			else
 			{
-				desiredCameraAngle = toPlanet.angle() + 90;
+				desiredCameraAngle = toDestination.angle() + 90;
 				landAngle = falltowards.getRotation() - desiredCameraAngle - 90;
 			}
-			pos.add(toPlanet.div(distanceToPlanet).scl(5.0f * deltaT));
-		}
+			pos.add(toDestination.div(distanceToDestination).scl(gravity * deltaT));
+		}		
+		
+		/*
+		 * FALLING TOWARDS PLANET
+		 */
+		
 		else if (falltowards instanceof Planet)
 		{
 			float r = falltowards.getRotation() - landAngle;
@@ -186,6 +197,12 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 					MathUtils.sinDeg(r) * d);
 			desiredCameraAngle = r - 90;
 		}
+		
+		
+		/*
+		 * FALLING TOWARDS SPACESHIP OR MOTHERSHIP
+		 */
+		
 		else if ((falltowards instanceof Spaceship)
 				|| (falltowards instanceof Mothership))
 		{
@@ -211,7 +228,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		}
 		else
 		{
-			desiredCameraAngle = toPlanet.angle() + 90;
+			desiredCameraAngle = toDestination.angle() + 90;
 		}
 
 		// reset camera angle
@@ -232,7 +249,7 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 
 			if (abs_angle > 0.1f)
 			{
-				rotateAmount = minabs((delta_angle) * 10 / distanceToPlanet,
+				rotateAmount = minabs((delta_angle) * 320.0f / distanceToDestination,
 						CAMERA_ROTATE_SPEED) * deltaT;
 			}
 			else

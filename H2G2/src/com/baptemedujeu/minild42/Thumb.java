@@ -11,7 +11,8 @@ import com.jackamikaz.gameengine.Engine;
 import com.jackamikaz.gameengine.UpdatedEntity;
 import com.jackamikaz.gameengine.utils.DisplayOrder;
 
-public class Thumb implements DisplayedEntity, UpdatedEntity {
+public class Thumb implements DisplayedEntity, UpdatedEntity
+{
 
 	private Vector2 pos;
 	private Vector2 direction;
@@ -19,99 +20,112 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 	private SpatialEntity var_ignore;
 	private Hitchhiker var_origin;
 	private Sprite sprite;
-	
+
 	private Query thingDistance;
-	
+
 	private static int thumbCount = 0;
+
 	public static Boolean canThrow()
 	{
-		return thumbCount==0;
+		return thumbCount == 0;
 	}
-	
+
 	float time;
-	
-	public Thumb(float x, float y, float tx, float ty, float power, SpatialEntity fallto, SpatialEntity ignore)
+
+	public Thumb(float x, float y, float tx, float ty, float power,
+			SpatialEntity fallto, SpatialEntity ignore)
 	{
 		// register
 		thumbCount++;
 		Engine.DisplayMaster().Add(this);
 		Engine.UpdateMaster().Add(this);
-		
+
 		// position
 		pos = new Vector2(x, y);
-		direction = new Vector2(tx,ty);
+		direction = new Vector2(tx, ty);
 		direction.nor();
 		direction.scl(power);
-		//var_falltowards = fallto;
-		if ((ignore instanceof Spaceship)) {
+		// var_falltowards = fallto;
+		if ((ignore instanceof Spaceship))
+		{
 			var_falltowards = ignore;
-		} else {
+		}
+		else
+		{
 			var_falltowards = fallto;
 		}
 		var_ignore = ignore;
 		var_origin = (Hitchhiker) fallto;
-		//Temporary
+		// Temporary
 		time = 0;
 		// sprite
 		Texture t = Engine.ResourceManager().GetTexture("sprites");
 		TextureRegion tr = new TextureRegion(t, 128, 0, 128, 128);
 		sprite = new Sprite(tr);
-		sprite.setSize(.5f, .5f * sprite.getHeight() / sprite.getWidth());
+		sprite.setSize(16, 16 * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getHeight() / 2);
+		sprite.setPosition(pos.x - sprite.getWidth() / 2,
+				pos.y - sprite.getHeight() / 2);
 		sprite.rotate(direction.angle());
-		
-		thingDistance = 
-				new EntityQueryManager.Query(){
-					@Override
-					public float evaluate(UpdatedEntity e) {
-						// TODO Auto-generated method stub
-						if ((e instanceof Mothership || e instanceof Spaceship || e instanceof Planet) && e != var_ignore){
-							SpatialEntity se = (SpatialEntity)e;
-							return se.getPosition().dst(pos);
-						}
-						
-						
-						return Float.MAX_VALUE;
-					}};
-				//new EntityQueryManager.TypedDistanceQuery(pos, SpatialEntity.class);
-		
+
+		thingDistance = new EntityQueryManager.Query()
+		{
+			@Override
+			public float evaluate(UpdatedEntity e)
+			{
+				// TODO Auto-generated method stub
+				if ((e instanceof Mothership || e instanceof Spaceship || e instanceof Planet)
+						&& e != var_ignore)
+				{
+					SpatialEntity se = (SpatialEntity) e;
+					return se.getPosition().dst(pos);
+				}
+
+				return Float.MAX_VALUE;
+			}
+		};
+		// new EntityQueryManager.TypedDistanceQuery(pos, SpatialEntity.class);
+
 	}
-	
+
 	@Override
 	public void Update(float deltaT)
 	{
-		time = Math.min(time+deltaT, 1);
-		if (time > 0.1 && pos.dst(var_falltowards.getPosition())<0.5) {
+		time = Math.min(time + deltaT, 1);
+		if (time > 0.1 && pos.dst(var_falltowards.getPosition()) < 16.0f)
+		{
 			thumbCount--;
 			Engine.DisplayMaster().Remove(this);
 			Engine.UpdateMaster().Remove(this);
 		}
-		
-		SpatialEntity closest = (SpatialEntity) (EntityQueryManager.getMin(thingDistance));
-		if (time > 0.1 && pos.dst(closest.getPosition())<Math.max(0.5, closest.getRadius())) {
+
+		SpatialEntity closest = (SpatialEntity) (EntityQueryManager
+				.getMin(thingDistance));
+		if (time > 0.1
+				&& pos.dst(closest.getPosition()) < Math.max(16.0f, closest.getRadius()))
+		{
 			var_origin.setFalltowards(closest);
 			thumbCount--;
 			Engine.DisplayMaster().Remove(this);
 			Engine.UpdateMaster().Remove(this);
 		}
-		
+
 		Vector2 cpos = new Vector2(pos);
 		Vector2 tpos = new Vector2(var_falltowards.getPosition());
-		tpos.sub(cpos).scl(deltaT*10);
-		//System.out.println(tpos);
+		tpos.sub(cpos).scl(deltaT * 10);
+		// System.out.println(tpos);
 		direction.add(tpos);
-		direction.scl(1-deltaT);
-		
+		direction.scl(1 - deltaT);
+
 		Vector2 theDir = new Vector2(direction);
 		pos = pos.add(theDir.scl(deltaT));
 	}
-	
 
 	@Override
 	public void Display(float lerp)
 	{
-		sprite.setPosition(pos. x- sprite.getWidth() / 2,pos.y - sprite.getHeight() / 2);
+		sprite.setPosition(pos.x - sprite.getWidth() / 2,
+				pos.y - sprite.getHeight() / 2);
 		sprite.draw(Engine.Batch());
 	}
 
@@ -123,18 +137,19 @@ public class Thumb implements DisplayedEntity, UpdatedEntity {
 
 	public float getWidth()
 	{
-		return  sprite.getWidth();
+		return sprite.getWidth();
 	}
 
 	public float getHeight()
 	{
-		return  sprite.getHeight();
+		return sprite.getHeight();
 	}
 
-	public void setPosition(float x, float y) 
+	public void setPosition(float x, float y)
 	{
 		pos.x = x;
-		pos.y = y ;
-		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getWidth() / 2);
+		pos.y = y;
+		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getWidth()
+				/ 2);
 	}
 }

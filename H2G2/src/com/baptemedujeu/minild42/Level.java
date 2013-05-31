@@ -13,15 +13,12 @@ public class Level
 	public Hitchhiker hiker;
 	public Mothership mother;
 	
-	
-	private int level_width = 32, level_height = 32;
-	
 	private void parseMotherships(XmlReader.Element og)
 	{
 		for(XmlReader.Element o : og.getChildrenByName("object"))
 		{
-			float x = o.getFloatAttribute("x")/level_width, 
-						y = o.getFloatAttribute("y")/level_height;
+			float x = o.getFloatAttribute("x"), 
+						y = o.getFloatAttribute("y");
 			mother = new Mothership(x, y);
 		}
 	}
@@ -29,16 +26,16 @@ public class Level
 	private void parseSpaceships(XmlReader.Element og, int colour)
 	{
 		for(XmlReader.Element o : og.getChildrenByName("object"))
-			Spaceship.parse(o, colour, level_width, level_height);
+			Spaceship.parse(o, colour);
 	}
 	
 	private void parsePlanets(XmlReader.Element og, int colour)
 	{
 		for(XmlReader.Element o : og.getChildrenByName("object"))
 		{
-			float x = o.getFloatAttribute("x")/level_width, 
-						y = o.getFloatAttribute("y")/level_height,
-						r = o.getFloatAttribute("width")/2/level_width;
+			float x = o.getFloatAttribute("x"), 
+						y = o.getFloatAttribute("y"),
+						r = o.getFloatAttribute("width")/2;
 			new Planet(x, y, r, colour);
 		}
 	}
@@ -47,9 +44,9 @@ public class Level
 	{
 		for(XmlReader.Element o : og.getChildrenByName("object"))
 		{
-			float x = o.getFloatAttribute("x")/level_width, 
-						y = o.getFloatAttribute("y")/level_height, 
-						r = o.getFloatAttribute("width")/2/level_width;
+			float x = o.getFloatAttribute("x"), 
+						y = o.getFloatAttribute("y"), 
+						r = o.getFloatAttribute("width")/2;
 			hiker = new Hitchhiker(x + r, y + r);
 		}
 	}

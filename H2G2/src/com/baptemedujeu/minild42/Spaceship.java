@@ -17,7 +17,7 @@ import com.jackamikaz.gameengine.utils.DisplayOrder;
 
 public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 {
-	private static final float SPEED = 2.0f;
+	private static final float SPEED = 64.0f;
 	private static final int ELLIPSE_BASE_SAMPLES = 3;
 	
 	private Sprite sprite;
@@ -28,11 +28,11 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	
 	private float size;
 	
-	public static Spaceship parse(XmlReader.Element o, int colour, float level_width, float level_height)
+	public static Spaceship parse(XmlReader.Element o, int colour)
 	{
 		// Create Spaceship
-		float x = o.getFloatAttribute("x")/level_width, 
-					y = o.getFloatAttribute("y")/level_height;
+		float x = o.getFloatAttribute("x"), 
+					y = o.getFloatAttribute("y");
 		Spaceship newbie = new Spaceship(x, y, colour);
 		
 		// Push poly-line itinerary
@@ -44,8 +44,8 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 			for(String s : str_coordinate_pairs)
 			{
 				int comma = s.indexOf(",");
-				float dest_x = x + Float.parseFloat(s.substring(0, comma))/level_width,
-							dest_y = y + Float.parseFloat(s.substring(comma + 1))/level_height;
+				float dest_x = x + Float.parseFloat(s.substring(0, comma)),
+							dest_y = y + Float.parseFloat(s.substring(comma + 1));
 				newbie.pushDestination(new Vector2(dest_x, dest_y));
 			}
 		}
@@ -53,8 +53,8 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		// Push elliptical itinerary
 		else if(o.getChildByName("ellipse") != null)
 		{
-			float rx = o.getFloatAttribute("width")/2/level_width,
-						ry = o.getFloatAttribute("height")/2/level_height;
+			float rx = o.getFloatAttribute("width")/2,
+						ry = o.getFloatAttribute("height")/2;
 			
 			int n_spokes = (int)(Math.floor(Math.sqrt(rx*rx)*ELLIPSE_BASE_SAMPLES));
 			double spoke = 2*Math.PI/n_spokes;
@@ -86,7 +86,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		sprite = new Sprite(unoccupied);
 		
 		float ratio = (sprite.getHeight() / sprite.getWidth());
-		size = sprite.getWidth() / 128.0f;
+		size = sprite.getWidth() / 4.0f;
 		sprite.setSize(size, size*ratio);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setPosition(pos.x, pos.y);
@@ -99,18 +99,6 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	{	
 		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - sprite.getHeight()/2);
 		sprite.draw(Engine.Batch());
-
-		/*Vector2 prev = null;
-		sr.begin(ShapeRenderer.ShapeType.Line);
-			sr.setColor(1, 1, 0, 1);
-			for(Vector2 dest : itinerary)
-			{
-				if (prev != null)
-					sr.line(prev.x, prev.y, dest.x, dest.y);
-				prev = dest;
-			}
-		sr.end();*/
-		
 	}
 
 	@Override
