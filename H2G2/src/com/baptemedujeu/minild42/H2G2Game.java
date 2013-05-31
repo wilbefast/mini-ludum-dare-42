@@ -22,6 +22,9 @@ public class H2G2Game implements ApplicationListener
 	private SpriteBatch gui;
 	private Sprite mothership_arrow;
 	
+	// Background
+	private Background bg;
+	
 	
 	@Override
 	public void create()
@@ -36,7 +39,7 @@ public class H2G2Game implements ApplicationListener
 		Engine.Init();
 		Engine.ResourceManager().LoadResourcesFile("resources.txt");
 		
-		new Background();
+		bg = new Background();
 		// GUI sprites
 		gui = new SpriteBatch();
 		gui.setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, w, h));
@@ -48,7 +51,8 @@ public class H2G2Game implements ApplicationListener
 		mothership_arrow.setOrigin(mothership_arrow.getWidth() / 2, mothership_arrow.getHeight() / 2);
 
 		// camera
-		camera = new OrthographicCamera(13.0f, 13.0f * h / w);
+		camera = new OrthographicCamera(43.0f, 43.0f * h / w);
+		camera.rotate(180);
 		
 		// level
 		level = new Level("hike1.tmx");
@@ -56,7 +60,7 @@ public class H2G2Game implements ApplicationListener
 		// music
 		Music music = Engine.ResourceManager().GetMusic("music");
 		music.setLooping(true);
-		music.play();
+		//music.play();
 		
 		}
 		catch(Exception e)
@@ -86,6 +90,7 @@ public class H2G2Game implements ApplicationListener
 
 			world.begin();
 				world.setProjectionMatrix(camera.combined);
+				bg.Display(0.0f);
 				Engine.ClassicLoop();
 			world.end();
 

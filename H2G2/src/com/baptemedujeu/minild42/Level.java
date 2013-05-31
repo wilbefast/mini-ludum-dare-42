@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlReader;
 
 public class Level
@@ -28,20 +29,7 @@ public class Level
 	private void parseSpaceships(XmlReader.Element og, int colour)
 	{
 		for(XmlReader.Element o : og.getChildrenByName("object"))
-		{
-			if (o.getChildByName("polyline") != null)
-			{
-				System.out.println("TODO implement polyline");
-				continue;
-			}
-			
-			
-			
-			float x = o.getFloatAttribute("x")/level_width, 
-						y = o.getFloatAttribute("y")/level_height, 
-						r = o.getFloatAttribute("width")/2/level_width;
-			new Spaceship(x + r, y + r, r, colour);
-		}
+			Spaceship.parse(o, colour, level_width, level_height);
 	}
 	
 	private void parsePlanets(XmlReader.Element og, int colour)
