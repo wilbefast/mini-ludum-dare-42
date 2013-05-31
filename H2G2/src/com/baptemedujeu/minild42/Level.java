@@ -36,7 +36,7 @@ public class Level
 			float x = o.getFloatAttribute("x"), 
 						y = o.getFloatAttribute("y"),
 						r = o.getFloatAttribute("width")/2;
-			new Planet(x, y, r, colour);
+			new Planet(x + r, y + r, r, colour);
 		}
 	}
 	
