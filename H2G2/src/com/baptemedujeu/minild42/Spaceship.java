@@ -23,8 +23,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	private Sprite sprite;
 	private TextureRegion occupied, unoccupied;
 	
-	private Vector2 pos;
-	private Vector2 dir = new Vector2(1, 0);
+	private Vector2 pos, dest, dir = new Vector2(1, 0);
 	
 	private float size;
 	
@@ -77,6 +76,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		Engine.UpdateMaster().Add(this);
 		
 		pos = new Vector2(x, y);
+		dest = new Vector2(x, y);
 		
 		// sprite
 		Texture t = Engine.ResourceManager().GetTexture("sprites");
@@ -89,15 +89,13 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 		size = sprite.getWidth() / 4.0f;
 		sprite.setSize(size, size*ratio);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-		sprite.setPosition(pos.x, pos.y);
+		sprite.setPosition(pos.x  - sprite.getWidth()/2, pos.y - sprite.getHeight()/2);
 	}
 
 	
-	private ShapeRenderer sr = new ShapeRenderer(20);
 	@Override
 	public void Display(float lerp)
 	{	
-		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - sprite.getHeight()/2);
 		sprite.draw(Engine.Batch());
 	}
 
@@ -111,13 +109,16 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	public void Update(float deltaT)
 	{
 		// roll the list
-		if(pos.dst2(itinerary.peek()) < 10.0f)
+		if(pos.dst2(itinerary.peek()) < 10240.0f)
 			itinerary.addLast(itinerary.poll());
+		Useful.lerp(dest, itinerary.peek(), deltaT*10);
 		
-		dir.set(itinerary.peek()).sub(pos).nor().scl(SPEED * deltaT);
-		pos.add(dir);
+		// move
+		pos.add(dir.set(dest).sub(pos).nor().scl(SPEED * deltaT));
 		
-		//sprite.setRotation((float)(180*orbitAngle / Math.PI) + Math.signum(orbitSpeed)*90.0f-90);
+		// reset view
+		sprite.setRotation(dir.angle() - 90.0f);
+		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - sprite.getHeight()/2);
 	}
 	
 	
@@ -133,7 +134,7 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	public void pushDestination(Vector2 newDestination)
 	{
 		if(itinerary.isEmpty())
-			;//pos.set(newDestination);
+			pos.set(newDestination);
 		itinerary.add(newDestination);
 	}
 	
