@@ -29,10 +29,6 @@ public class H2G2Game implements ApplicationListener
 	@Override
 	public void create()
 	{
-		
-		try
-		{
-		
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		
@@ -60,13 +56,7 @@ public class H2G2Game implements ApplicationListener
 		// music
 		Music music = Engine.ResourceManager().GetMusic("music");
 		music.setLooping(true);
-		//music.play();
-		
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+		music.play();
 	}
 
 	@Override
@@ -80,8 +70,6 @@ public class H2G2Game implements ApplicationListener
 	@Override
 	public void render()
 	{
-		try
-		{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
@@ -99,7 +87,7 @@ public class H2G2Game implements ApplicationListener
 		
 		// ... compass
 		toMothership.set(level.mother.getPosition()).sub(camera.position.x, camera.position.y);
-		boolean drawCompass = (toMothership.len2() > 48);
+		boolean drawCompass = (toMothership.len2() > Gdx.graphics.getWidth()*Gdx.graphics.getHeight());
 		if(drawCompass)
 		{
 			// ... ... position
@@ -115,13 +103,6 @@ public class H2G2Game implements ApplicationListener
 			if(drawCompass)
 				mothership_arrow.draw(gui);
 		gui.end();
-		
-		
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
 		
 	}
 

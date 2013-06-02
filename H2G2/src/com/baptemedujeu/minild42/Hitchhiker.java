@@ -215,21 +215,8 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 				((Mothership) falltowards).setOccupied(true);
 		}
 
-		if ((falltowards instanceof Spaceship))
-		{
-			Spaceship sp = (Spaceship) falltowards;
-			int sign = 1; // TODO (int) Math.signum(sp.orbitSpeed);
-			desiredCameraAngle = (float) (sp.getRotation() * (180 / Math.PI)) + 90
-					* sign - 90;
-		}
-		else if ((falltowards instanceof Mothership))
-		{
-			desiredCameraAngle += deltaT * 15;
-		}
-		else
-		{
+		if ((falltowards instanceof Planet))
 			desiredCameraAngle = toDestination.angle() + 90;
-		}
 
 		// reset camera angle
 		currentCameraAngle = (currentCameraAngle + 360) % 360;
@@ -264,8 +251,8 @@ public class Hitchhiker implements DisplayedEntity, UpdatedEntity, InputEntity,
 		Vector2 p = ((falltowards instanceof Spaceship) ? falltowards.getPosition()
 				: this.pos);
 		H2G2Game.camera.position.set(
-				Useful.lerp(H2G2Game.camera.position.x, p.x, deltaT),
-				Useful.lerp(H2G2Game.camera.position.y, p.y, deltaT), 0);
+				Useful.lerp(H2G2Game.camera.position.x, p.x, deltaT*3),
+				Useful.lerp(H2G2Game.camera.position.y, p.y, deltaT*3), 0);
 
 		// update camera
 		H2G2Game.camera.update();

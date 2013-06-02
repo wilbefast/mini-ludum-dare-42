@@ -17,7 +17,10 @@
    <ellipse/>
   </object>
   <object x="128" y="1472">
-   <polyline points="0,0 128,128 224,-128 448,-128 128,-1056 0,-1184"/>
+   <polyline points="0,0 192,64 224,-128 448,-128 128,-1056 0,-1184"/>
+  </object>
+  <object x="64" y="1568" width="288" height="288">
+   <ellipse/>
   </object>
  </objectgroup>
  <objectgroup color="#55ffff" name="ships_green" width="64" height="64">

@@ -18,7 +18,7 @@ import com.jackamikaz.gameengine.utils.DisplayOrder;
 public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 {
 	private static final float SPEED = 64.0f;
-	private static final int ELLIPSE_BASE_SAMPLES = 1;
+	private static final float ELLIPSE_BASE_SAMPLES = 0.3f;
 	
 	private Sprite sprite;
 	private TextureRegion occupied, unoccupied;
@@ -109,8 +109,11 @@ public class Spaceship implements DisplayedEntity, UpdatedEntity, SpatialEntity
 	public void Update(float deltaT)
 	{
 		// roll the list
-		if(pos.dst2(itinerary.peek()) < 10240.0f)
+		if(pos.dst2(itinerary.peek()) < size*size)
+		{
 			itinerary.addLast(itinerary.poll());
+			Useful.lerp(dest, itinerary.peek(), 0.3f);
+		}
 		Useful.lerp(dest, itinerary.peek(), deltaT);
 		
 		// move

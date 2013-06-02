@@ -10,4 +10,5 @@
 /H2G2-android/gen/com/baptemedujeu/minild42/BuildConfig.java
 /H2G2-android/gen/com/baptemedujeu/minild42/R.java
 /H2G2-html/.gwt/.gwt-log
-/H2G2-html/war/WEB-INF/lib/gwt-servlet.jar
+/H2G2-html/war/
+/H2G2-html/gwt*
